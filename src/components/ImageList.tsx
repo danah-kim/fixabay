@@ -1,4 +1,4 @@
-import { Images } from 'api';
+import { Image, Images } from 'types/api';
 
 function ImageList({
   image,
@@ -7,11 +7,10 @@ function ImageList({
   size,
   setSize,
 }: {
-  image: Images['hits'];
+  image: Image[];
   total: number;
   isLoadingMore: boolean;
   size: number;
-
   setSize: (size: number | ((size: number) => number)) => Promise<Images[] | undefined>;
 }) {
   return image.length ? (
@@ -24,8 +23,8 @@ function ImageList({
       {total > image.length && (
         <button
           disabled={isLoadingMore}
-          onClick={() => {
-            setSize(size + 1);
+          onClick={async () => {
+            await setSize(size + 1);
           }}
         >
           Load More
