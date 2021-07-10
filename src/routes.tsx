@@ -1,7 +1,7 @@
 import { lazy } from 'react';
 
-const SwrPage = lazy(() => import('page/SwrPage'));
-const ReactQueryPage = lazy(() => import('page/ReactQueryPage'));
+const SwrPage = lazy(() => import('pages/SwrPage'));
+const ReactQueryPage = lazy(() => import('pages/ReactQueryPage'));
 
 const routes = {
   swr: {
