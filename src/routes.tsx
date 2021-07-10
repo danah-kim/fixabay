@@ -3,20 +3,16 @@ import { lazy } from 'react';
 const SwrPage = lazy(() => import('page/SwrPage'));
 const ReactQueryPage = lazy(() => import('page/ReactQueryPage'));
 
-export const Routes = {
-  swr: '/swr',
-  reactQuery: '/react-query',
-};
-
-const routes = [
-  {
-    path: Routes.swr,
+const routes = {
+  swr: {
+    name: 'swr',
+    path: '/swr',
     component: SwrPage,
   },
-  {
-    path: Routes.reactQuery,
+  reactQuery: {
+    name: 'reactQuery',
+    path: '/react-query',
     component: ReactQueryPage,
   },
-];
-
+};
 export default routes;

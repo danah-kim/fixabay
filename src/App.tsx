@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import routes, { Routes } from 'routes';
+import routes from 'routes';
 import NoMatch from 'components/NoMatch';
 
 function App() {
@@ -9,14 +9,14 @@ function App() {
       <Suspense fallback={<div>Loading...</div>}>
         <Switch>
           <Route exact path="/">
-            {Object.entries(Routes).map(([key, value]) => (
+            {Object.entries(routes).map(([key, { path }]) => (
               <li key={key}>
-                <Link to={value}>{key}</Link>
+                <Link to={path}>{key}</Link>
               </li>
             ))}
           </Route>
-          {routes.map(({ path, component: Component }) => (
-            <Route key={path} path={path} component={Component} />
+          {Object.entries(routes).map(([key, { path, component: Component }]) => (
+            <Route key={key} path={path} component={Component} />
           ))}
           <Route path="*">
             <NoMatch />
