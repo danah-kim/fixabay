@@ -1,38 +1,38 @@
+import { useCallback } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { Image, Images } from 'types/api';
 
 function ImageList({
   image,
   total,
-  isLoadingMore,
   size,
   setSize,
 }: {
   image: Image[];
   total: number;
-  isLoadingMore: boolean;
   size: number;
   setSize: (size: number | ((size: number) => number)) => Promise<Images[] | undefined>;
 }) {
+  const fetchMoreData = useCallback(async () => {
+    await setSize(size + 1);
+  }, [setSize, size]);
+
   return image.length ? (
-    <>
-      <div style={{ display: 'grid' }}>
-        {image.map(({ id, previewURL }) => (
-          <img key={id} src={previewURL} alt={`${id}`} />
-        ))}
-      </div>
-      {total > image.length && (
-        <button
-          disabled={isLoadingMore}
-          onClick={async () => {
-            await setSize(size + 1);
-          }}
-        >
-          Load More
-        </button>
-      )}
-    </>
+    <InfiniteScroll
+      dataLength={image.length}
+      next={fetchMoreData}
+      hasMore={total !== image.length}
+      loader={<h4>Loading...</h4>}
+      endMessage={<p>Make something awesome :)</p>}
+    >
+      {image.map(({ id, previewURL }) => (
+        <div key={id}>
+          <img src={previewURL} alt={`${id}`} />
+        </div>
+      ))}
+    </InfiniteScroll>
   ) : (
-    <p>no data</p>
+    <p>No data</p>
   );
 }
 

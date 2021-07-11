@@ -21,7 +21,6 @@ function SwrPage() {
 
   const image = data ? data.flatMap(({ hits }) => hits) : [];
   const isLoadingInitialData = !data && !error;
-  const isLoadingMore = isLoadingInitialData || (size > 0 && !!data && typeof data[size - 1] === 'undefined');
 
   const onSubmit: SubmitHandler<SearchFormValues> = async ({ keyword }) => {
     setParams({ ...params, q: encodeURIComponent(keyword) });
@@ -35,7 +34,7 @@ function SwrPage() {
       {isLoadingInitialData ? (
         <p>loading...</p>
       ) : (
-        !error && <ImageList image={image} total={total} isLoadingMore={isLoadingMore} size={size} setSize={setSize} />
+        !error && <ImageList image={image} total={total} size={size} setSize={setSize} />
       )}
       {error && <p>failed to load</p>}
     </div>
