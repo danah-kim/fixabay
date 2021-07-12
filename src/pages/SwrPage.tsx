@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useSWRInfinite } from 'swr';
 import { SubmitHandler } from 'react-hook-form';
 import { fetcher, getKey } from 'swrUtils';
@@ -21,23 +21,34 @@ function SwrPage() {
 
   const image = data ? data.flatMap(({ hits }) => hits) : [];
   const isLoadingInitialData = !data && !error;
+  const hasMore = total !== image.length;
 
-  const onSubmit: SubmitHandler<SearchFormValues> = async ({ keyword }) => {
-    setParams({ ...params, q: encodeURIComponent(keyword) });
-    await setSize(0);
-  };
+  const onSubmit: SubmitHandler<SearchFormValues> = useCallback(
+    async ({ keyword }) => {
+      setParams({ ...params, q: encodeURIComponent(keyword) });
+      await setSize(0);
+    },
+    [params, setSize]
+  );
+
+  const fetchMoreData = useCallback(async () => {
+    await setSize(size + 1);
+  }, [setSize, size]);
 
   return (
-    <div>
+    <>
       <ReactHelmet title={routes.swr.name} description={routes.swr.name} canonical={routes.swr.path} />
-      <SearchBar onSubmit={onSubmit} />
       {isLoadingInitialData ? (
         <p>loading...</p>
+      ) : error ? (
+        <p>failed to load {error}</p>
       ) : (
-        !error && <ImageList image={image} total={total} size={size} setSize={setSize} />
+        <div>
+          <SearchBar onSubmit={onSubmit} />
+          <ImageList image={image} hasMore={hasMore} fetchMoreData={fetchMoreData} />
+        </div>
       )}
-      {error && <p>failed to load</p>}
-    </div>
+    </>
   );
 }
 
