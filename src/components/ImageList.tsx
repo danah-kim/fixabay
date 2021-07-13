@@ -1,6 +1,9 @@
+import { memo } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { Masonry } from 'masonic';
 import { Image } from 'types/api';
 import Card from './Card';
+import 'styles/masonry.css';
 
 function ImageList({
   images,
@@ -12,7 +15,13 @@ function ImageList({
   fetchMoreData: () => void;
 }) {
   return (
-    <div>
+    <div
+      className="container-fluid"
+      style={{
+        minHeight: '100vh',
+        margin: '163px auto',
+      }}
+    >
       {images.length ? (
         <InfiniteScroll
           dataLength={images.length}
@@ -21,9 +30,7 @@ function ImageList({
           loader={<h4>Loading...</h4>}
           endMessage={<p>Make something awesome :)</p>}
         >
-          {images.map((image) => (
-            <Card key={image.id} {...image} />
-          ))}
+          <Masonry items={images} columnGutter={25} columnWidth={400} overscanBy={5} render={Card} />
         </InfiniteScroll>
       ) : (
         <p>No data</p>
@@ -32,4 +39,4 @@ function ImageList({
   );
 }
 
-export default ImageList;
+export default memo(ImageList);

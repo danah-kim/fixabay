@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { SearchFormValues } from 'types/common';
 
@@ -29,4 +30,4 @@ function SearchBar({ onSubmit }: SearchBarProps) {
   );
 }
 
-export default SearchBar;
+export default memo(SearchBar);

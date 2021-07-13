@@ -1,13 +1,18 @@
+import { memo } from 'react';
 import Lazyload from 'react-lazyload';
+import { RenderComponentProps } from 'masonic/types/use-masonry';
 import { Image } from 'types/api';
 
-function Card({ id, webformatURL, webformatHeight }: Image) {
+function Card({ index, data: { id, webformatURL, webformatHeight } }: RenderComponentProps<Image>) {
   return (
-    <Lazyload throttle={200} height={webformatHeight}>
+    <Lazyload key={index} throttle={200} height={webformatHeight}>
       <div
         key={id}
         style={{
           width: '100%',
+          minHeight: '100%',
+          borderRadius: '1rem',
+          background: 'rgba(0,0,0,.11)',
         }}
       >
         <img
@@ -15,6 +20,8 @@ function Card({ id, webformatURL, webformatHeight }: Image) {
           alt={`${id}`}
           style={{
             width: '100%',
+            display: 'block',
+            borderRadius: '1rem',
           }}
         />
       </div>
@@ -22,4 +29,4 @@ function Card({ id, webformatURL, webformatHeight }: Image) {
   );
 }
 
-export default Card;
+export default memo(Card);

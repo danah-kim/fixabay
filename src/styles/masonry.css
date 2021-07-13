@@ -1,0 +1,37 @@
+/* imageList.tsx */
+.masonry-grid {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-left: -20px;
+  width: auto;
+}
+.masonry-grid-column {
+  padding-left: 20px;
+  background-clip: padding-box;
+}
+
+.masonry-grid-column > div {
+  background: rgba(0,0,0,.11);
+  margin-bottom: 20px;
+}
+
+@media (min-width: 768px){
+  .container-fluid {
+    width: 100%;
+    max-width: calc(100% - 64px);
+  }
+}
+
+@media (min-width: 1280px) {
+  .container-fluid {
+    width: 100%;
+    max-width: calc(100% - 144px);
+  }
+}
+
+@media (min-width: 1920px) {
+  .container-fluid {
+    width: 1920px;
+  }
+}

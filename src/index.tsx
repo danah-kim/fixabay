@@ -4,6 +4,7 @@ import { SWRConfig } from 'swr';
 import { AxiosError } from 'axios';
 import App from 'App';
 import reportWebVitals from './reportWebVitals';
+import 'normalize.css';
 
 ReactDOM.render(
   <StrictMode>
