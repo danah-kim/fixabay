@@ -71,7 +71,7 @@ function ReactQueryApp() {
         <div>
           <SearchBar onSubmit={onSubmit} />
           <ImageList
-            image={data ? data.pages.flatMap(({ hits }) => hits) : []}
+            images={data ? data.pages.flatMap(({ hits }) => hits) : []}
             hasMore={!!hasNextPage}
             fetchMoreData={fetchMoreData}
           />

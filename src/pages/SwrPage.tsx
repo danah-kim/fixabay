@@ -45,7 +45,7 @@ function SwrPage() {
       ) : (
         <div>
           <SearchBar onSubmit={onSubmit} />
-          <ImageList image={image} hasMore={hasMore} fetchMoreData={fetchMoreData} />
+          <ImageList images={image} hasMore={hasMore} fetchMoreData={fetchMoreData} />
         </div>
       )}
     </>

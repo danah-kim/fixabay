@@ -1,25 +1,34 @@
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Image } from 'types/api';
+import Card from './Card';
 
-function ImageList({ image, hasMore, fetchMoreData }: { image: Image[]; hasMore: boolean; fetchMoreData: () => void }) {
-  return image.length ? (
+function ImageList({
+  images,
+  hasMore,
+  fetchMoreData,
+}: {
+  images: Image[];
+  hasMore: boolean;
+  fetchMoreData: () => void;
+}) {
+  return (
     <div>
-      <InfiniteScroll
-        dataLength={image.length}
-        next={fetchMoreData}
-        hasMore={hasMore}
-        loader={<h4>Loading...</h4>}
-        endMessage={<p>Make something awesome :)</p>}
-      >
-        {image.map(({ id, previewURL }) => (
-          <div key={id}>
-            <img src={previewURL} alt={`${id}`} />
-          </div>
-        ))}
-      </InfiniteScroll>
+      {images.length ? (
+        <InfiniteScroll
+          dataLength={images.length}
+          next={fetchMoreData}
+          hasMore={hasMore}
+          loader={<h4>Loading...</h4>}
+          endMessage={<p>Make something awesome :)</p>}
+        >
+          {images.map((image) => (
+            <Card key={image.id} {...image} />
+          ))}
+        </InfiniteScroll>
+      ) : (
+        <p>No data</p>
+      )}
     </div>
-  ) : (
-    <p>No data</p>
   );
 }
 
