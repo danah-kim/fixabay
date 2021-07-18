@@ -1,26 +1,16 @@
 import { useCallback, useState } from 'react';
+import { SubmitHandler } from 'react-hook-form';
+import { useInfiniteQuery, useQueryClient } from 'react-query';
 import axios from 'axios';
-import { QueryClientProvider, QueryClient, useInfiniteQuery, useQueryClient } from 'react-query';
 import { API_URL, PER_PAGE } from 'constant';
 import routes from 'routes';
 import { Images, SearchImagesParams } from 'types/api';
+import { SearchFormValues } from 'types/common';
 import ReactHelmet from 'components/ReactHelmet';
 import ImageList from 'components/ImageList';
-import SearchBar from '../components/SearchBar';
-import { SubmitHandler } from 'react-hook-form';
-import { SearchFormValues } from '../types/common';
-
-const queryClient = new QueryClient();
+import SearchBar from 'components/SearchBar';
 
 function ReactQueryPage() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <ReactQueryApp />
-    </QueryClientProvider>
-  );
-}
-
-function ReactQueryApp() {
   const queryClient = useQueryClient();
   const [pageIndex, setPageIndex] = useState(0);
   const [params, setParams] = useState<Partial<SearchImagesParams>>({

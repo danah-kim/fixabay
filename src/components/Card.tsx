@@ -1,11 +1,15 @@
 import { memo } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import Lazyload from 'react-lazyload';
 import { RenderComponentProps } from 'masonic/types/use-masonry';
 import { Image } from 'types/api';
+import routes from 'routes';
 
 function Card({ index, data: { id, webformatURL, webformatHeight } }: RenderComponentProps<Image>) {
+  const location = useLocation();
+
   return (
-    <Lazyload key={index} throttle={200} height={webformatHeight}>
+    <Lazyload key={index} throttle={100} height={webformatHeight}>
       <div
         key={id}
         style={{
@@ -15,15 +19,25 @@ function Card({ index, data: { id, webformatURL, webformatHeight } }: RenderComp
           background: 'rgba(0,0,0,.11)',
         }}
       >
-        <img
-          src={webformatURL}
-          alt={`${id}`}
-          style={{
-            width: '100%',
-            display: 'block',
-            borderRadius: '1rem',
+        <Link
+          key={id}
+          to={{
+            pathname: routes[
+              location.pathname.includes(routes.reactQuery.path) ? 'reactQueryImageView' : 'swrImageView'
+            ].path.replace(':id', `${id}`),
+            state: { background: location },
           }}
-        />
+        >
+          <img
+            src={webformatURL}
+            alt={`${id}`}
+            style={{
+              width: '100%',
+              display: 'block',
+              borderRadius: '1rem',
+            }}
+          />
+        </Link>
       </div>
     </Lazyload>
   );

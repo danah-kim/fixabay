@@ -3,7 +3,6 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { Masonry } from 'masonic';
 import { Image } from 'types/api';
 import Card from './Card';
-import 'styles/masonry.css';
 
 function ImageList({
   images,
