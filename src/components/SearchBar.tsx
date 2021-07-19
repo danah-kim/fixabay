@@ -1,5 +1,7 @@
 import { memo } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { STORAGE_KEY } from 'constant';
+import useLocalStorage from 'hooks/useLocalStorage';
 import { SearchFormValues } from 'types/common';
 
 interface SearchBarProps {
@@ -7,6 +9,8 @@ interface SearchBarProps {
 }
 
 function SearchBar({ onSubmit }: SearchBarProps) {
+  const [value, setValue] = useLocalStorage<string[]>(STORAGE_KEY.recentKeywords);
+
   const {
     register,
     formState: { errors },
@@ -14,18 +18,24 @@ function SearchBar({ onSubmit }: SearchBarProps) {
   } = useForm();
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate>
+    <form
+      onSubmit={handleSubmit<SearchFormValues>(({ search, ...rest }) => {
+        setValue(value?.length ? value.concat(search).slice(value.length > 1 ? -4 : 0) : [search]);
+        return onSubmit({ search, ...rest });
+      })}
+      noValidate
+    >
       <input
         type="search"
         autoComplete="off"
         autoCapitalize="none"
         spellCheck={false}
         placeholder="이미지 검색"
-        {...register('keyword', {
+        {...register('search', {
           required: '검색어를 입력해주세요.',
         })}
       />
-      {errors.keyword && <p>{errors.keyword.message}</p>}
+      {errors.search && <p>{errors.search.message}</p>}
     </form>
   );
 }

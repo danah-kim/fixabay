@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import { useSWRInfinite } from 'swr';
 import { SubmitHandler } from 'react-hook-form';
-import { fetcher, getKey } from 'swrUtils';
+import { fetcher, getKey } from 'lib/swrUtils';
 import routes from 'routes';
 import { PER_PAGE } from 'constant';
 import { Images, SearchImagesParams } from 'types/api';
@@ -24,8 +24,8 @@ function SwrPage() {
   const hasMore = total !== image.length;
 
   const onSubmit: SubmitHandler<SearchFormValues> = useCallback(
-    async ({ keyword }) => {
-      setParams({ ...params, q: encodeURIComponent(keyword) });
+    async ({ search }) => {
+      setParams({ ...params, q: encodeURIComponent(search) });
       await setSize(0);
     },
     [params, setSize]

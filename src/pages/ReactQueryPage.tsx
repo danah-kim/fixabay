@@ -16,7 +16,6 @@ function ReactQueryPage() {
   const [params, setParams] = useState<Partial<SearchImagesParams>>({
     per_page: PER_PAGE,
   });
-
   const { isLoading, isFetchingNextPage, isError, data, fetchNextPage, hasNextPage } = useInfiniteQuery<Images>(
     'images',
     async ({ pageParam = 0 }) => {
@@ -31,8 +30,8 @@ function ReactQueryPage() {
   );
 
   const onSubmit: SubmitHandler<SearchFormValues> = useCallback(
-    async ({ keyword }) => {
-      setParams({ ...params, q: encodeURIComponent(keyword) });
+    async ({ search }) => {
+      setParams({ ...params, q: encodeURIComponent(search) });
       setPageIndex(0);
       await queryClient.removeQueries('images', { exact: true });
     },
