@@ -28,13 +28,16 @@ function App() {
               </li>
             ))}
         </Route>
+        <Route path={swrRoutes.swr.path}>
+          <SwrApp background={background || location} />
+        </Route>
+        <Route path={reactQueryRoutes.reactQuery.path}>
+          <ReactQueryApp background={background || location} />
+        </Route>
+        <Route>
+          <NoMatch />
+        </Route>
       </Switch>
-      <Route path={swrRoutes.swr.path}>
-        <SwrApp background={background || location} />
-      </Route>
-      <Route path={reactQueryRoutes.reactQuery.path}>
-        <ReactQueryApp background={background || location} />
-      </Route>
     </Suspense>
   );
 }
