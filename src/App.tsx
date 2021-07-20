@@ -7,7 +7,7 @@ import SWRDevtools from '@jjordy/swr-devtools';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import routes, { reactQueryRoutes, swrRoutes } from 'routes';
-import NoMatch from 'components/NoMatch';
+import NoMatch from 'components/error/NoMatch';
 import 'styles/masonry.css';
 
 export interface LocationState {
@@ -23,7 +23,7 @@ function App() {
       <Switch>
         <Route exact path="/">
           {Object.entries(routes)
-            .filter(([_, { isPage }]) => isPage)
+            .filter(([_, { isPage, isNave }]) => isPage && !isNave)
             .map(([key, { path }]) => (
               <li key={key}>
                 <Link to={path}>{key}</Link>

@@ -1,27 +1,38 @@
-import { useCallback, useMemo, useState } from 'react';
-import { useSWRInfinite } from 'swr';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { SubmitHandler } from 'react-hook-form';
-import { fetcher, getKey } from 'lib/swrUtils';
-import routes from 'routes';
+import routes, { swrRoutes } from 'routes';
 import { PER_PAGE } from 'constant';
-import { Images, SearchImagesParams } from 'types/api';
+import { getImageType } from 'lib/utils';
+import useSwrImages from 'hooks/useSwrImages';
+import { SearchImagesParams } from 'types/api';
 import { SearchFormValues } from 'types/common';
-import ReactHelmet from 'components/ReactHelmet';
-import ImageList from 'components/ImageList';
-import SearchBar from 'components/SearchBar';
+import PageTemplate from 'components/base/PageTemplate';
+import ImageList from 'components/image/ImageList';
 
 function SwrPage() {
+  const location = useLocation();
+  const imageType = getImageType(location.pathname.replace(swrRoutes.swr.path, ''));
   const [params, setParams] = useState<Partial<SearchImagesParams>>({
     per_page: PER_PAGE,
+    image_type: imageType,
   });
-  const { data, error, size, setSize } = useSWRInfinite<Images>((index) => getKey(index, params), fetcher);
-
+  const { data, isLoading, isError, size, setSize, refresh } = useSwrImages(params);
+  const image = data ? data.flatMap(({ hits }) => hits) : [];
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const total = useMemo(() => (data?.length ? data[0].totalHits : 0), [data?.length && data[0].totalHits]);
-
-  const image = data ? data.flatMap(({ hits }) => hits) : [];
-  const isLoadingInitialData = !data && !error;
   const hasMore = total !== image.length;
+
+  const refetchData = useCallback(async () => {
+    await setSize(0);
+    await refresh();
+    setParams({ ...params, image_type: imageType });
+  }, [imageType, params, refresh, setSize]);
+
+  useEffect(() => {
+    params.image_type !== imageType && refetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [imageType]);
 
   const onSubmit: SubmitHandler<SearchFormValues> = useCallback(
     async ({ search }) => {
@@ -36,19 +47,19 @@ function SwrPage() {
   }, [setSize, size]);
 
   return (
-    <>
-      <ReactHelmet title={routes.swr.name} description={routes.swr.name} canonical={routes.swr.path} />
-      {isLoadingInitialData ? (
-        <p>loading...</p>
-      ) : error ? (
-        <p>failed to load {error}</p>
-      ) : (
-        <div>
-          <SearchBar onSubmit={onSubmit} />
-          <ImageList images={image} hasMore={hasMore} fetchMoreData={fetchMoreData} />
-        </div>
-      )}
-    </>
+    <PageTemplate
+      isLoading={isLoading}
+      isError={isError}
+      menu={Object.values(swrRoutes)
+        .filter(({ isPage, isNave }) => isPage && isNave)
+        .map(({ path, name }) => ({ path, name }))}
+      onSubmitSearch={onSubmit}
+      title={routes.swr.name}
+      description={routes.swr.name}
+      path={routes.swr.path}
+    >
+      <ImageList images={image} hasMore={hasMore} fetchMoreData={fetchMoreData} />
+    </PageTemplate>
   );
 }
 

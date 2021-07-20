@@ -2,7 +2,7 @@ import { memo } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Masonry } from 'masonic';
 import { Image } from 'types/api';
-import Card from './Card';
+import ImageCard from './ImageCard';
 
 function ImageList({
   images,
@@ -18,7 +18,7 @@ function ImageList({
       className="container-fluid"
       style={{
         minHeight: '100vh',
-        margin: '163px auto',
+        margin: '0px auto',
       }}
     >
       {images.length ? (
@@ -29,7 +29,7 @@ function ImageList({
           loader={<h4>Loading...</h4>}
           endMessage={<p>Make something awesome :)</p>}
         >
-          <Masonry items={images} columnGutter={25} columnWidth={400} overscanBy={5} render={Card} />
+          <Masonry items={images} columnGutter={25} columnWidth={400} overscanBy={5} render={ImageCard} />
         </InfiniteScroll>
       ) : (
         <p>No data</p>

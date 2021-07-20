@@ -5,7 +5,7 @@ import { RenderComponentProps } from 'masonic/types/use-masonry';
 import { Image } from 'types/api';
 import routes from 'routes';
 
-function Card({ index, data: { id, webformatURL, webformatHeight } }: RenderComponentProps<Image>) {
+function ImageCard({ index, data: { id, webformatURL, webformatHeight } }: RenderComponentProps<Image>) {
   const location = useLocation();
 
   return (
@@ -43,4 +43,4 @@ function Card({ index, data: { id, webformatURL, webformatHeight } }: RenderComp
   );
 }
 
-export default memo(Card);
+export default memo(ImageCard);

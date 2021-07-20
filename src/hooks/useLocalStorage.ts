@@ -10,7 +10,7 @@ const valid = (() => {
   }
 })();
 
-function useLocalStorage<T = any>(key: string) {
+function useLocalStorage<T = string>(key: string) {
   function getItem(): T | undefined {
     const value = valid ? localStorage.getItem(key) : fallbackStorage[key];
 

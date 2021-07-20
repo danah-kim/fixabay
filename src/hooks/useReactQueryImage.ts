@@ -3,7 +3,7 @@ import axios from 'axios';
 import { API_URL } from 'constant';
 import { Image, Images } from 'types/api';
 
-const getImageById = async (id: string) => {
+const fetchImage = async (id: string) => {
   const { data } = await axios.get<Images>(API_URL, {
     params: {
       id,
@@ -15,7 +15,7 @@ const getImageById = async (id: string) => {
 };
 
 function useReactQueryImage(id: string) {
-  return useQuery<Image>(['image', id], () => getImageById(id));
+  return useQuery<Image>(['image', id], () => fetchImage(id));
 }
 
 export default useReactQueryImage;

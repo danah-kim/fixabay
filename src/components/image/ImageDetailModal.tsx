@@ -12,13 +12,13 @@ const customStyles = {
   },
 };
 
-interface DetailModalProps {
+interface ImageDetailModalProps {
   isLoading: boolean;
   isError: boolean;
   data: Image | undefined;
 }
 
-function DetailModal({ isLoading, isError, data }: DetailModalProps) {
+function ImageDetailModal({ isLoading, isError, data }: ImageDetailModalProps) {
   const history = useHistory();
 
   const closeModal = useCallback(
@@ -68,4 +68,4 @@ function DetailModal({ isLoading, isError, data }: DetailModalProps) {
   );
 }
 
-export default DetailModal;
+export default ImageDetailModal;
