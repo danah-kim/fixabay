@@ -2,6 +2,7 @@ import { KeyboardEvent, MouseEvent, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import Modal from 'react-modal';
 import { Image } from 'types/api';
+import DownloadButton from 'components/common/DownloadButton';
 
 Modal.setAppElement('#root');
 
@@ -9,6 +10,9 @@ const customStyles = {
   overlay: {
     backgroundColor: 'rgba(0,0,0,.6)',
     cursor: 'pointer',
+  },
+  content: {
+    cursor: 'default',
   },
 };
 
@@ -53,15 +57,41 @@ function ImageDetailModal({ isLoading, isError, data }: ImageDetailModalProps) {
         ) : isError ? (
           <span>Error</span>
         ) : (
-          <img
-            src={data?.webformatURL}
-            alt={`${data?.id}`}
-            style={{
-              width: '100%',
-              display: 'block',
-              borderRadius: '1rem',
-            }}
-          />
+          <div>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                marginBottom: 20,
+              }}
+            >
+              <div style={{ marginRight: 15 }}>
+                <p>{data!.user}</p>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  flex: '1 1 auto',
+                  marginRight: 15,
+                }}
+              >
+                <p>likes: {data!.likes},</p>
+                <p>views: {data!.views},</p>
+                <p>downloads: {data!.downloads}</p>
+              </div>
+              <DownloadButton name={`${data!.id}`} url={data!.largeImageURL} />
+            </div>
+            <img
+              src={data!.webformatURL}
+              alt={`${data!.id}`}
+              style={{
+                width: '100%',
+                display: 'block',
+                borderRadius: '1rem',
+              }}
+            />
+          </div>
         )}
       </div>
     </Modal>

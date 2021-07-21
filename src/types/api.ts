@@ -87,8 +87,8 @@ export enum Order {
 
 export interface SearchImagesParams {
   q?: string;
-  lang?: Lang;
-  id?: string; // default: "en"
+  lang?: Lang; // default: "en"
+  id?: string;
   image_type?: ImageType; // default = 'all'
   orientation?: Orientation; // default = 'all'
   category?: Category;
