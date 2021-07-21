@@ -20,17 +20,17 @@ function ReactQueryPage() {
     per_page: PER_PAGE,
     image_type: imageType,
   });
-  const { isLoading, isFetchingNextPage, isError, data, fetchNextPage, hasNextPage, remove } = useReactQueryImages({
+  const { isLoading, isFetchingNextPage, isError, data, fetchNextPage, hasNextPage } = useReactQueryImages({
     pageIndex,
     setPageIndex,
     params,
   });
 
-  const refetchData = useCallback(() => {
-    remove();
+  const refetchData = useCallback(async () => {
     setPageIndex(0);
     setParams({ ...params, image_type: imageType });
-  }, [imageType, params, remove]);
+    await queryClient.removeQueries('images', { exact: true });
+  }, [imageType, params, queryClient]);
 
   useEffect(() => {
     params.image_type !== imageType && refetchData();

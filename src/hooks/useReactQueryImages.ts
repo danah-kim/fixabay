@@ -26,11 +26,11 @@ interface useReactQueryImagesProps {
 
 function useReactQueryImages({ pageIndex, setPageIndex, params }: useReactQueryImagesProps) {
   return useInfiniteQuery<Images, unknown, Images, (string | Partial<SearchImagesParams>)[]>(
-    ['images', params],
+    ['images'],
     () => fetchImages({ pageIndex, setPageIndex, params }),
     {
       refetchOnWindowFocus: false,
-      getNextPageParam: (lastPage) => (lastPage.total === lastPage.hits.length ? false : pageIndex),
+      getNextPageParam: (lastPage) => (lastPage.totalHits === lastPage.hits.length * pageIndex ? false : pageIndex),
     }
   );
 }
