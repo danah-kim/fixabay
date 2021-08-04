@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { SubmitHandler } from 'react-hook-form';
+import { useSetRecoilState } from 'recoil';
+import searchState from 'recoil/search';
 import routes, { swrRoutes } from 'routes';
 import { PER_PAGE } from 'constant';
 import { getImageType } from 'lib/utils';
@@ -9,6 +11,7 @@ import { SearchImagesParams } from 'types/api';
 import { SearchFormValues } from 'types/common';
 import PageTemplate from 'components/base/PageTemplate';
 import ImageList from 'components/image/ImageList';
+import NotFound from 'components/error/NotFound';
 
 function SwrPage() {
   const location = useLocation();
@@ -18,10 +21,11 @@ function SwrPage() {
     image_type: imageType,
   });
   const { data, isLoading, isError, size, setSize, refresh } = useSwrImages(params);
-  const image = data ? data.flatMap(({ hits }) => hits) : [];
+  const setSearchState = useSetRecoilState(searchState);
+  const images = data ? data.flatMap(({ hits }) => hits) : [];
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const total = useMemo(() => (data?.length ? data[0].totalHits : 0), [data?.length && data[0].totalHits]);
-  const hasMore = total !== image.length;
+  const hasMore = total !== images.length;
 
   const refetchData = useCallback(async () => {
     await setSize(0);
@@ -36,10 +40,11 @@ function SwrPage() {
 
   const onSubmit: SubmitHandler<SearchFormValues> = useCallback(
     async ({ search }) => {
+      setSearchState(search);
       setParams({ ...params, q: encodeURIComponent(search) });
       await setSize(0);
     },
-    [params, setSize]
+    [params, setSearchState, setSize]
   );
 
   const fetchMoreData = useCallback(async () => {
@@ -58,7 +63,11 @@ function SwrPage() {
       description={routes.swr.name}
       path={routes.swr.path}
     >
-      <ImageList images={image} hasMore={hasMore} fetchMoreData={fetchMoreData} />
+      {!isLoading && !hasMore && !images.length ? (
+        <NotFound />
+      ) : (
+        <ImageList images={images} hasMore={hasMore} fetchMoreData={fetchMoreData} />
+      )}
     </PageTemplate>
   );
 }

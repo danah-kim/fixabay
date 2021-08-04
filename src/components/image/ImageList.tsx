@@ -14,7 +14,7 @@ import {
   OnScrollCallback,
 } from 'react-virtualized';
 import { useRecoilState } from 'recoil';
-import shadowToggleState from 'recoil/atom';
+import shadowToggleState from 'recoil/shadowToggle';
 import { Image } from 'types/api';
 import { CARD } from 'constant';
 import ImageCard from './ImageCard';

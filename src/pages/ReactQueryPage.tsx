@@ -2,6 +2,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { SubmitHandler } from 'react-hook-form';
 import { useQueryClient } from 'react-query';
+import { useSetRecoilState } from 'recoil';
+import searchState from 'recoil/search';
 import { PER_PAGE } from 'constant';
 import routes, { reactQueryRoutes } from 'routes';
 import { getImageType } from 'lib/utils';
@@ -10,6 +12,7 @@ import { SearchImagesParams } from 'types/api';
 import { SearchFormValues } from 'types/common';
 import PageTemplate from 'components/base/PageTemplate';
 import ImageList from 'components/image/ImageList';
+import NotFound from 'components/error/NotFound';
 
 function ReactQueryPage() {
   const location = useLocation();
@@ -25,6 +28,8 @@ function ReactQueryPage() {
     setPageIndex,
     params,
   });
+  const setSearchState = useSetRecoilState(searchState);
+  const images = data ? data.pages.flatMap(({ hits }) => hits) : [];
 
   const refetchData = useCallback(() => {
     setPageIndex(0);
@@ -39,12 +44,12 @@ function ReactQueryPage() {
 
   const onSubmit: SubmitHandler<SearchFormValues> = useCallback(
     ({ search }) => {
+      setSearchState(search);
       setParams({ ...params, q: encodeURIComponent(search) });
       setPageIndex(0);
       queryClient.removeQueries('images', { exact: true });
     },
-
-    [params, queryClient]
+    [params, queryClient, setSearchState]
   );
 
   const fetchMoreData = useCallback(async () => {
@@ -65,11 +70,11 @@ function ReactQueryPage() {
       description={routes.reactQuery.name}
       path={routes.reactQuery.path}
     >
-      <ImageList
-        images={data ? data.pages.flatMap(({ hits }) => hits) : []}
-        hasMore={!!hasNextPage}
-        fetchMoreData={fetchMoreData}
-      />
+      {!isLoading && !isFetchingNextPage && !hasNextPage && !images.length ? (
+        <NotFound />
+      ) : (
+        <ImageList images={images} hasMore={!!hasNextPage} fetchMoreData={fetchMoreData} />
+      )}
     </PageTemplate>
   );
 }
