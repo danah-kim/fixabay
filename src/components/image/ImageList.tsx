@@ -19,15 +19,13 @@ import { Image } from 'types/api';
 import { CARD } from 'constant';
 import ImageCard from './ImageCard';
 
-function ImageList({
-  images,
-  hasMore,
-  fetchMoreData,
-}: {
+interface ImageListProps {
   images: Image[];
   hasMore: boolean;
   fetchMoreData: () => void;
-}) {
+}
+
+function ImageList({ images, hasMore, fetchMoreData }: ImageListProps) {
   const [shadowToggle, setShadowToggle] = useRecoilState(shadowToggleState);
   const masonryRef = useRef<Masonry | null>(null);
 

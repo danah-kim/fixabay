@@ -26,10 +26,10 @@ function ReactQueryPage() {
     params,
   });
 
-  const refetchData = useCallback(async () => {
+  const refetchData = useCallback(() => {
     setPageIndex(0);
     setParams({ ...params, image_type: imageType });
-    await queryClient.removeQueries('images', { exact: true });
+    queryClient.removeQueries('images', { exact: true });
   }, [imageType, params, queryClient]);
 
   useEffect(() => {
@@ -38,10 +38,10 @@ function ReactQueryPage() {
   }, [imageType]);
 
   const onSubmit: SubmitHandler<SearchFormValues> = useCallback(
-    async ({ search }) => {
+    ({ search }) => {
       setParams({ ...params, q: encodeURIComponent(search) });
       setPageIndex(0);
-      await queryClient.removeQueries('images', { exact: true });
+      queryClient.removeQueries('images', { exact: true });
     },
 
     [params, queryClient]

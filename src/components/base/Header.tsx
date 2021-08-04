@@ -1,15 +1,23 @@
 import { memo } from 'react';
 import { SubmitHandler } from 'react-hook-form';
+import styled from 'styled-components/macro';
+import tw from 'twin.macro';
 import { useRecoilValue } from 'recoil';
 import shadowToggleState from 'recoil/atom';
-import { SearchFormValues } from 'types/common';
-import Avatar from 'components/common/Avatar';
+import { Menu as MenuT, SearchFormValues } from 'types/common';
 import Menu from './HeaderMenu';
 import Search from './HeaderSearch';
+import Profile from './HeaderProfile';
+
+const Container = styled.div<{ showShadow: boolean }>`
+  ${tw`w-full fixed flex flex-row items-center box-border px-4 py-1 top-0  h-20 bg-white z-10`};
+  box-shadow: ${({ showShadow }) => showShadow && 'rgb(0 0 0 / 10%) 0px 8px 8px -8px'};
+  transition: ${({ showShadow }) => showShadow && tw`transition-shadow duration-300 ease-in-out`};
+`;
 
 interface HeaderProps {
   homePath: string;
-  menu: { path: string; name: string }[];
+  menu: MenuT[];
   onSubmitSearch: SubmitHandler<SearchFormValues>;
 }
 
@@ -17,27 +25,11 @@ function Header({ homePath, menu, onSubmitSearch }: HeaderProps) {
   const shadowToggle = useRecoilValue(shadowToggleState);
 
   return (
-    <div
-      style={{
-        height: 56,
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        boxSizing: 'border-box',
-        padding: 10,
-        position: 'fixed',
-        top: 0,
-        zIndex: 1,
-        backgroundColor: '#fff',
-        boxShadow: shadowToggle ? 'rgb(0 0 0 / 10%) 0px 8px 8px -8px' : undefined,
-        transition: shadowToggle ? 'box-shadow 300ms ease-in-out 0s' : undefined,
-      }}
-    >
+    <Container showShadow={shadowToggle}>
       <Menu homePath={homePath} menu={menu} />
       <Search onSubmit={onSubmitSearch} />
-      <Avatar />
-    </div>
+      <Profile />
+    </Container>
   );
 }
 

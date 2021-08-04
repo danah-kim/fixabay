@@ -6,6 +6,7 @@ import { RecoilRoot } from 'recoil';
 import CustomStyles from 'styles/CustomStyles';
 import reportWebVitals from './reportWebVitals';
 import 'react-virtualized/styles.css';
+import 'tailwindcss/tailwind.css';
 
 ReactDOM.render(
   <>
