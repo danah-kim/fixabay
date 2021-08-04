@@ -8,7 +8,8 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import routes, { reactQueryRoutes, swrRoutes } from 'routes';
 import NoMatch from 'components/error/NoMatch';
-import 'styles/masonry.css';
+import 'react-virtualized/styles.css';
+import 'styles.css';
 
 export interface LocationState {
   background?: Location<LocationState>;

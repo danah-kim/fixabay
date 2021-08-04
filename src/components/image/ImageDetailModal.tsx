@@ -10,6 +10,7 @@ const customStyles = {
   overlay: {
     backgroundColor: 'rgba(0,0,0,.6)',
     cursor: 'pointer',
+    zIndex: 2,
   },
   content: {
     cursor: 'default',

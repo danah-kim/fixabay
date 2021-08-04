@@ -21,6 +21,10 @@ function Header({ homePath, menu, onSubmitSearch }: HeaderProps) {
         alignItems: 'center',
         boxSizing: 'border-box',
         padding: 10,
+        position: 'fixed',
+        top: 0,
+        zIndex: 1,
+        backgroundColor: '#fff',
       }}
     >
       <Menu homePath={homePath} menu={menu} />
