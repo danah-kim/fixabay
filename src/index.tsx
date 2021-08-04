@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import App from 'App';
 import { GlobalStyles } from 'twin.macro';
+import { RecoilRoot } from 'recoil';
 import CustomStyles from 'styles/CustomStyles';
 import reportWebVitals from './reportWebVitals';
 import 'react-virtualized/styles.css';
@@ -11,7 +12,9 @@ ReactDOM.render(
     <GlobalStyles />
     <CustomStyles />
     <Router>
-      <App />
+      <RecoilRoot>
+        <App />
+      </RecoilRoot>
     </Router>
   </>,
   document.getElementById('root')

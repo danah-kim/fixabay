@@ -11,10 +11,13 @@ import {
   MasonryCellProps,
   WindowScroller,
   Size,
+  OnScrollCallback,
 } from 'react-virtualized';
+import { useRecoilState } from 'recoil';
+import shadowToggleState from 'recoil/atom';
 import { Image } from 'types/api';
-import ImageCard from './ImageCard';
 import { CARD } from 'constant';
+import ImageCard from './ImageCard';
 
 function ImageList({
   images,
@@ -25,7 +28,9 @@ function ImageList({
   hasMore: boolean;
   fetchMoreData: () => void;
 }) {
+  const [shadowToggle, setShadowToggle] = useRecoilState(shadowToggleState);
   const masonryRef = useRef<Masonry | null>(null);
+
   const cellMeasurerCache = useMemo(
     () =>
       new CellMeasurerCache({
@@ -80,6 +85,13 @@ function ImageList({
     [cellMeasurerCache]
   );
 
+  const onScroll: OnScrollCallback = useCallback(
+    ({ scrollTop }) => {
+      if (shadowToggle !== !!scrollTop) setShadowToggle(!shadowToggle);
+    },
+    [setShadowToggle, shadowToggle]
+  );
+
   return (
     <WindowScroller>
       {({ height, scrollTop }) => (
@@ -108,6 +120,7 @@ function ImageList({
                       cellPositioner={cellPositioner}
                       cellRenderer={cellRenderer(itemsWithSizes)}
                       onCellsRendered={onRowsRendered}
+                      onScroll={onScroll}
                     />
                   )}
                 </ImageMeasurer>
