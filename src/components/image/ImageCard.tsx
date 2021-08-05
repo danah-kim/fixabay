@@ -10,7 +10,7 @@ import Info from './ImageCardInfo';
 const Container = styled.div`
   ${tw`pb-4 px-2 h-full box-border flex flex-col`};
 `;
-const Box = tw.div`relative h-full w-full cursor[zoom-in]`;
+const Box = tw.div`relative h-full w-full`;
 const ImageBox = styled.div`
   ${tw`rounded-2xl bg-gray-100 h-full box-border`};
 `;
@@ -39,7 +39,6 @@ function ImageCard({
   ImageT,
   'id' | 'user_id' | 'user' | 'userImageURL' | 'webformatURL' | 'largeImageURL' | 'likes' | 'views' | 'downloads'
 >) {
-  const location = useLocation();
   const [isHover, toggle] = useToggle(false);
 
   const handleHover = useCallback(() => {
@@ -65,6 +64,8 @@ function ImageCard({
 }
 
 const Image = memo(function Image({ id, webformatURL }: Pick<ImageT, 'id' | 'webformatURL'>) {
+  const location = useLocation();
+
   return (
     <ImageBox>
       <Link

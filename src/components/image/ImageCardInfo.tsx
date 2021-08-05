@@ -8,13 +8,13 @@ import DownloadButton from 'components/common/DownloadButton';
 
 const Base = tw.div`absolute inset-0 rounded-2xl`;
 const Container = styled.div<{ $isHover: boolean }>`
-  ${tw`box-border transition-opacity duration-150 ease-in-out`};
+  ${tw`box-border transition-opacity duration-150 ease-in-out pointer-events-none`};
   opacity: ${({ $isHover }) => +$isHover};
 `;
 const Drop = styled(Base)`
   ${tw`bg-gradient-to-b from-transparent via-transparent to-black opacity-60`}
 `;
-const Top = tw.div`box-border m-3 flex`;
+const Top = tw.div`box-border m-3 float-right pointer-events-auto`;
 const Bottom = tw.div`absolute left-0 right-0 bottom-0`;
 const Statistics = tw.div`box-border p-3 pb-2.5 flex`;
 const Statistic = styled.div`
@@ -39,7 +39,7 @@ function ImageCardInfo({ isHover, id, largeImageURL, likes, views, downloads }: 
       <Container $isHover={isHover}>
         <Drop />
       </Container>
-      <Container $isHover={isHover} style={{ zIndex: 100 }}>
+      <Container $isHover={isHover}>
         <Base>
           <Top>
             <DownloadButton name={`${id}`} url={largeImageURL} style={{ marginLeft: 'auto' }} />
