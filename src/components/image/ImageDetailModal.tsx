@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import Modal from 'react-modal';
 import { Image } from 'types/api';
 import DownloadButton from 'components/common/DownloadButton';
+import NotFound from 'components/error/NotFound';
 
 Modal.setAppElement('#root');
 
@@ -56,7 +57,7 @@ function ImageDetailModal({ isLoading, isError, data }: ImageDetailModalProps) {
         {isLoading ? (
           <p>Loading...</p>
         ) : isError ? (
-          <span>Error</span>
+          <NotFound isError />
         ) : (
           <div>
             <div

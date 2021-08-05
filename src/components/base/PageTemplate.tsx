@@ -5,6 +5,7 @@ import styled from 'styled-components/macro';
 import { Menu, SearchFormValues } from 'types/common';
 import Header from './Header';
 import ReactHelmet from './ReactHelmet';
+import NotFound from 'components/error/NotFound';
 
 const Content = styled.div`
   padding-top: 80px;
@@ -41,7 +42,7 @@ function PageTemplate({
       />
       <div>
         <Header homePath={path} menu={menu} onSubmitSearch={onSubmitSearch} />
-        {isLoading ? <p>Loading...</p> : isError ? <span>Error</span> : <Content>{children}</Content>}
+        {isLoading ? <p>Loading...</p> : isError ? <NotFound isError /> : <Content>{children}</Content>}
       </div>
     </>
   );

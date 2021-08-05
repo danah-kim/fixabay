@@ -9,7 +9,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import styled from 'styled-components/macro';
 import tw from 'twin.macro';
 import routes, { reactQueryRoutes, swrRoutes } from 'routes';
-import NoMatch from 'components/error/NoMatch';
+import NotFound from 'components/error/NotFound';
 
 const Button = styled.button<{ primary?: boolean }>`
   ${tw`py-2 px-4 m-4 text-base border-2 border-solid border-green-500 rounded-xl`};
@@ -46,7 +46,7 @@ function App() {
           <ReactQueryApp background={background || location} />
         </Route>
         <Route>
-          <NoMatch />
+          <NotFound />
         </Route>
       </Switch>
     </Suspense>
@@ -85,7 +85,7 @@ function SwrApp({ background }: AppProps) {
               <Route key={key} path={path} component={component} />
             ))}
           <Route>
-            <NoMatch />
+            <NotFound />
           </Route>
         </Switch>
         {background &&
@@ -114,7 +114,7 @@ function ReactQueryApp({ background }: AppProps) {
             <Route key={key} path={path} component={component} />
           ))}
         <Route>
-          <NoMatch />
+          <NotFound />
         </Route>
       </Switch>
       {background &&

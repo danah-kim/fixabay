@@ -64,7 +64,7 @@ function SwrPage() {
       path={routes.swr.path}
     >
       {!isLoading && !hasMore && !images.length ? (
-        <NotFound />
+        <NotFound isSearch />
       ) : (
         <ImageList images={images} hasMore={hasMore} fetchMoreData={fetchMoreData} />
       )}

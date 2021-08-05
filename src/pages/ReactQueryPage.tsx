@@ -71,7 +71,7 @@ function ReactQueryPage() {
       path={routes.reactQuery.path}
     >
       {!isLoading && !isFetchingNextPage && !hasNextPage && !images.length ? (
-        <NotFound />
+        <NotFound isSearch />
       ) : (
         <ImageList images={images} hasMore={!!hasNextPage} fetchMoreData={fetchMoreData} />
       )}
