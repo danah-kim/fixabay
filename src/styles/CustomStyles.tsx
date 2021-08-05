@@ -7,6 +7,7 @@ const CustomStyles = createGlobalStyle`
   
   body {
     ${tw`antialiased`}
+    overflow: hidden;
   }
   a {
     color: inherit;
