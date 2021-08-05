@@ -1,16 +1,15 @@
-import { KeyboardEvent, MouseEvent, useCallback } from 'react';
+import { KeyboardEvent, memo, MouseEvent, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import Modal from 'react-modal';
 import { HiOutlineClipboardCopy } from 'react-icons/hi';
 import styled from 'styled-components/macro';
-import tw, { theme } from 'twin.macro';
+import tw from 'twin.macro';
 import { Image } from 'types/api';
-import routes from 'routes';
 import { copyTextToClipboard, formatNumberWithCommas } from 'lib/utils';
 import DownloadButton from 'components/common/DownloadButton';
 import NotFound from 'components/error/NotFound';
 import UserProfile from 'components/common/UserProfile';
-import useSwrImage from 'hooks/useSwrImage';
+import HashLoader from 'components/common/HashLoader';
 
 Modal.setAppElement('#root');
 
@@ -80,48 +79,42 @@ function ImageDetailModal({ isLoading, isError, data }: ImageDetailModalProps) {
 
   return (
     <Modal isOpen className="modal-content" onRequestClose={closeModal} style={customStyles} contentLabel="Image Modal">
-      <Paper>
-        {isLoading ? (
-          <p>Loading...</p>
-        ) : isError || !data ? (
+      {isLoading ? (
+        <HashLoader />
+      ) : isError || !data ? (
+        <Paper>
           <NotFound isError={isError} />
-        ) : (
-          <>
-            <ImageBox>
-              <Img
-                src={data.webformatURL}
-                alt={`${data.id}`}
-                onLoad={(e) => {
-                  console.log(e);
-                }}
-              />
-            </ImageBox>
-            <InfoBox>
-              <UserProfile user={data.user} userImageURL={data.userImageURL} />
-              <Statistics>
-                <Statistic>
-                  <Label>Likes</Label>
-                  {formatNumberWithCommas(data.likes)}
-                </Statistic>
-                <Statistic>
-                  <Label>Views</Label>
-                  {formatNumberWithCommas(data.views)}
-                </Statistic>
-                <Statistic>
-                  <Label>Downloads</Label>
-                  {formatNumberWithCommas(data.downloads)}
-                </Statistic>
-              </Statistics>
-              <Icon onClick={onClickCopy}>
-                <HiOutlineClipboardCopy />
-              </Icon>
-              <DownloadButton name={`${data.id}`} url={data.largeImageURL} visibleText />
-            </InfoBox>
-          </>
-        )}
-      </Paper>
+        </Paper>
+      ) : (
+        <Paper>
+          <ImageBox>
+            <Img src={data.webformatURL} alt={`${data.id}`} />
+          </ImageBox>
+          <InfoBox>
+            <UserProfile user={data.user} userImageURL={data.userImageURL} />
+            <Statistics>
+              <Statistic>
+                <Label>Likes</Label>
+                {formatNumberWithCommas(data.likes)}
+              </Statistic>
+              <Statistic>
+                <Label>Views</Label>
+                {formatNumberWithCommas(data.views)}
+              </Statistic>
+              <Statistic>
+                <Label>Downloads</Label>
+                {formatNumberWithCommas(data.downloads)}
+              </Statistic>
+            </Statistics>
+            <Icon onClick={onClickCopy}>
+              <HiOutlineClipboardCopy />
+            </Icon>
+            <DownloadButton name={`${data.id}`} url={data.largeImageURL} visibleText />
+          </InfoBox>
+        </Paper>
+      )}
     </Modal>
   );
 }
 
-export default ImageDetailModal;
+export default memo(ImageDetailModal);

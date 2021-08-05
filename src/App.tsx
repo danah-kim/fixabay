@@ -10,6 +10,7 @@ import styled from 'styled-components/macro';
 import tw from 'twin.macro';
 import routes, { reactQueryRoutes, swrRoutes } from 'routes';
 import NotFound from 'components/error/NotFound';
+import HashLoader from 'components/common/HashLoader';
 
 const Button = styled.button<{ primary?: boolean }>`
   ${tw`py-2 px-4 m-4 text-base border-2 border-solid border-green-500 rounded-xl`};
@@ -28,7 +29,7 @@ function App() {
   const background = location.state?.background;
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<HashLoader />}>
       <Switch>
         <Route exact path="/">
           {Object.entries(routes)
