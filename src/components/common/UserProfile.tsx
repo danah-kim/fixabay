@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import styled from 'styled-components/macro';
 import tw from 'twin.macro';
+import { AiOutlineSmile } from 'react-icons/ai';
 import { Image } from 'types/api';
 
 const Container = styled.div`
@@ -20,9 +21,7 @@ function UserProfile({ user, userImageURL }: UserProfileProps) {
   return (
     <Container>
       <Info>
-        <Avater>
-          <Img src={userImageURL} alt={user} />
-        </Avater>
+        <Avater>{userImageURL ? <Img src={userImageURL} alt={user} /> : <AiOutlineSmile />}</Avater>
         <Name>{user}</Name>
       </Info>
     </Container>
