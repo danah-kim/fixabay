@@ -75,7 +75,7 @@ function ImageList({ images, hasMore, fetchMoreData }: ImageListProps) {
         return (
           <CellMeasurer cache={cellMeasurerCache} index={index} key={key} parent={parent}>
             <div style={{ ...style }}>
-              <ImageCard {...item} cardHeight={style?.height} />
+              <ImageCard {...item} />
             </div>
           </CellMeasurer>
         );

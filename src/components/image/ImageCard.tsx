@@ -1,16 +1,44 @@
 import { memo, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useToggle } from 'react-use';
-import { Property } from 'csstype';
+import styled from 'styled-components/macro';
+import tw from 'twin.macro';
 import routes from 'routes';
-import { Image } from 'types/api';
-import DownloadButton from 'components/common/DownloadButton';
+import { Image as ImageT } from 'types/api';
+import Info from './ImageCardInfo';
 
-interface ImageCardProps extends Image {
-  cardHeight: Property.Height<string | number> | undefined;
-}
+const Container = styled.div`
+  ${tw`pb-4 px-2 h-full box-border flex flex-col`};
+`;
+const Box = tw.div`relative h-full w-full cursor[zoom-in]`;
+const ImageBox = styled.div`
+  ${tw`rounded-2xl bg-gray-100 h-full box-border`};
+`;
+const Img = tw.img`w-full rounded-2xl`;
+const UserBox = styled.div`
+  ${tw`p-2 pb-4 box-border`};
+`;
+const UserInfo = tw.div`flex items-center -mx-1`;
+const UserAvater = styled.div({
+  ...tw`w-6 h-auto mx-1`,
+  flex: '0 0 auto',
+});
+const UserName = tw.div`mx-1 flex-auto text-sm text-gray-800`;
 
-function ImageCard({ id, user, webformatURL, largeImageURL, likes, views, tags, cardHeight = 0 }: ImageCardProps) {
+function ImageCard({
+  id,
+  user_id,
+  user,
+  userImageURL,
+  webformatURL,
+  largeImageURL,
+  likes,
+  views,
+  downloads,
+}: Pick<
+  ImageT,
+  'id' | 'user_id' | 'user' | 'userImageURL' | 'webformatURL' | 'largeImageURL' | 'likes' | 'views' | 'downloads'
+>) {
   const location = useLocation();
   const [isHover, toggle] = useToggle(false);
 
@@ -19,115 +47,52 @@ function ImageCard({ id, user, webformatURL, largeImageURL, likes, views, tags, 
   }, [isHover, toggle]);
 
   return (
-    <div
-      style={{
-        paddingBottom: 16,
-        paddingLeft: 8,
-        paddingRight: 8,
-      }}
-    >
-      <div
-        key={id}
-        style={{
-          height: +cardHeight - 16,
-          borderRadius: 16,
-          background: 'rgb(212, 224, 226)',
-        }}
-        onMouseEnter={handleHover}
-        onMouseLeave={handleHover}
-      >
-        <Link
-          key={id}
-          to={{
-            pathname: routes[
-              location.pathname.includes(routes.reactQuery.path) ? 'reactQueryImageView' : 'swrImageView'
-            ].path.replace(':id', `${id}`),
-            state: { background: location },
-          }}
-        >
-          <img
-            src={webformatURL}
-            alt={`${id}`}
-            style={{
-              width: '100%',
-              display: 'block',
-              borderRadius: 16,
-            }}
-          />
-        </Link>
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            width: '100%',
-            height: '100%',
-            visibility: 'hidden',
-          }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              padding: 20,
-              position: 'absolute',
-              inset: 0,
-            }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                visibility: isHover ? 'visible' : 'hidden',
-                opacity: isHover ? 1 : 0,
-                transition: 'opacity .1s ease-in-out,visibility .1s ease-in-out',
-              }}
-            >
-              <div>{user}</div>
-              <div
-                style={{
-                  display: 'flex',
-                }}
-              >
-                <p>likes: {likes}</p>
-                <p>views: {views}</p>
-              </div>
-            </div>
-            <div
-              style={{
-                marginTop: 'auto',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                visibility: isHover ? 'visible' : 'hidden',
-                opacity: isHover ? 1 : 0,
-                transition: 'opacity .1s ease-in-out,visibility .1s ease-in-out',
-              }}
-            >
-              <div
-                style={{
-                  display: 'flex',
-                }}
-              >
-                {tags.split(',').map((tag) => (
-                  <p key={tag} style={{ paddingRight: 5 }}>
-                    {tag.trim()}
-                  </p>
-                ))}
-              </div>
-              <div
-                style={{
-                  marginLeft: 'auto',
-                }}
-              >
-                <DownloadButton name={`${id}`} url={largeImageURL} />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Container>
+      <Box onMouseEnter={handleHover} onMouseLeave={handleHover}>
+        <Image id={id} webformatURL={webformatURL} />
+        <Info
+          isHover={isHover}
+          id={id}
+          largeImageURL={largeImageURL}
+          likes={likes}
+          views={views}
+          downloads={downloads}
+        />
+      </Box>
+      <User user={user} user_id={user_id} userImageURL={userImageURL} />
+    </Container>
   );
 }
+
+const Image = memo(function Image({ id, webformatURL }: Pick<ImageT, 'id' | 'webformatURL'>) {
+  return (
+    <ImageBox>
+      <Link
+        to={{
+          pathname: routes[
+            location.pathname.includes(routes.reactQuery.path) ? 'reactQueryImageView' : 'swrImageView'
+          ].path.replace(':id', `${id}`),
+          state: { background: location },
+        }}
+        style={{ cursor: 'zoom-in' }}
+      >
+        <Img src={webformatURL} alt={`${id}`} />
+      </Link>
+    </ImageBox>
+  );
+});
+
+const User = memo(function User({ user, user_id, userImageURL }: Pick<ImageT, 'user' | 'user_id' | 'userImageURL'>) {
+  return (
+    <UserBox>
+      <UserInfo>
+        <UserAvater>
+          <Img src={userImageURL} alt={`${user_id}`} />
+        </UserAvater>
+        <UserName>{user}</UserName>
+      </UserInfo>
+    </UserBox>
+  );
+});
 
 export default memo(ImageCard);
