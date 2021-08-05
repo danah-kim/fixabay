@@ -5,6 +5,7 @@ import { TiHeart, TiEye } from 'react-icons/ti';
 import { IoMdCloudDownload } from 'react-icons/io/';
 import { Image } from 'types/api';
 import DownloadButton from 'components/common/DownloadButton';
+import { formatNumberWithK } from 'lib/utils';
 
 const Base = tw.div`absolute inset-0 rounded-2xl`;
 const Container = styled.div<{ $isHover: boolean }>`
@@ -51,15 +52,15 @@ function ImageCardInfo({ isHover, id, largeImageURL, likes, views, downloads }: 
           <Statistics>
             <Statistic>
               <TiHeart />
-              {likes}
+              {formatNumberWithK(likes)}
             </Statistic>
             <Statistic>
               <TiEye />
-              {views}
+              {formatNumberWithK(views)}
             </Statistic>
             <Statistic>
               <IoMdCloudDownload />
-              {downloads}
+              {formatNumberWithK(downloads)}
             </Statistic>
           </Statistics>
         </Bottom>

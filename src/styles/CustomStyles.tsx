@@ -15,17 +15,19 @@ const CustomStyles = createGlobalStyle`
   }
   input::-ms-clear,
   input::-ms-reveal{
-    display:none;width:0;height:0;
+    display: none;
+    width: 0;
+    height: 0;
   }
   input::-webkit-search-decoration,
   input::-webkit-search-cancel-button,
   input::-webkit-search-results-button,
   input::-webkit-search-results-decoration{
-    display:none;
+    display: none;
   }
 
   :focus {
-    outline: none;
+    outline: none !important;
   }
   
   .ReactVirtualized__Masonry__innerScrollContainer {
@@ -97,24 +99,6 @@ const CustomStyles = createGlobalStyle`
     @media (min-width: 5796px) and (max-width: 6047px) {
       width: 5796px !important;
     }
-  }
-
-  .modal-content {
-    margin-top: 32px;
-    inset: 0 !important;
-    border: none;
-    background: none;
-
-    @media (min-width: 768px) and (max-width: 1399px) {
-      margin-right: 70px;
-      margin-left: 70px;
-    }
-    @media (min-width: 768px){
-      margin-bottom: 100px;
-    }
-  }
-  .modal-open {
-    overflow: hidden;
   }
 `;
 
