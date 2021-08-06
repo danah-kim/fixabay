@@ -29,6 +29,7 @@ const CustomStyles = createGlobalStyle`
   :focus {
     outline: none !important;
   }
+  .ReactVirtualized__Grid,
   .ReactVirtualized__Masonry {
     padding-top: 80px;
   }
@@ -101,6 +102,10 @@ const CustomStyles = createGlobalStyle`
     @media (min-width: 5796px) and (max-width: 6047px) {
       width: 5796px !important;
     }
+  }
+  .ReactModal__Overlay {
+    position: absolute !important;
+    overflow-x: auto;
   }
   .ReactModal__Content {
     transition: all 0.8s cubic-bezier(0.77, 0, 0.175, 1) 0s;

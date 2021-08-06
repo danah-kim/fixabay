@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { memo, ReactNode, useCallback } from 'react';
 import {
   AutoSizer,
   CellMeasurer,
@@ -21,10 +21,19 @@ interface ImageListRenderProps {
   isRowLoaded: (params: Index) => boolean;
   loadMoreRows: (params: IndexRange) => Promise<unknown>;
   rowCount: number;
+  registerChild: (element?: ReactNode) => void;
   onScroll: OnScrollCallback;
 }
 
-function ImageRenderList({ images, height, isRowLoaded, loadMoreRows, rowCount, onScroll }: ImageListRenderProps) {
+function ImageRenderList({
+  images,
+  height,
+  isRowLoaded,
+  loadMoreRows,
+  rowCount,
+  registerChild,
+  onScroll,
+}: ImageListRenderProps) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const cellMeasurerCache = new CellMeasurerCache({
     defaultHeight: CARD.height,
@@ -71,16 +80,18 @@ function ImageRenderList({ images, height, isRowLoaded, loadMoreRows, rowCount, 
               defaultWidth={CARD.width}
             >
               {({ itemsWithSizes }) => (
-                <List
-                  deferredMeasurementCache={cellMeasurerCache}
-                  width={width}
-                  height={height}
-                  rowCount={itemsWithSizes.length}
-                  rowHeight={cellMeasurerCache.rowHeight}
-                  rowRenderer={rowRenderer(itemsWithSizes)}
-                  onRowsRendered={onRowsRendered}
-                  onScroll={onScroll}
-                />
+                <div ref={registerChild}>
+                  <List
+                    deferredMeasurementCache={cellMeasurerCache}
+                    width={width}
+                    height={height}
+                    rowCount={itemsWithSizes.length}
+                    rowHeight={cellMeasurerCache.rowHeight}
+                    rowRenderer={rowRenderer(itemsWithSizes)}
+                    onRowsRendered={onRowsRendered}
+                    onScroll={onScroll}
+                  />
+                </div>
               )}
             </ImageMeasurer>
           )}

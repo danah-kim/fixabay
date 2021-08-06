@@ -31,7 +31,7 @@ function ImageList({ images, hasMore, fetchMoreData }: ImageListProps) {
 
   return (
     <WindowScroller>
-      {({ width, height }) => {
+      {({ width, height, registerChild }) => {
         return width > 505 ? (
           <RenderMasonry
             images={images}
@@ -39,6 +39,7 @@ function ImageList({ images, hasMore, fetchMoreData }: ImageListProps) {
             isRowLoaded={isRowLoaded}
             loadMoreRows={loadMoreRows}
             rowCount={hasMore ? images.length + 1 : images.length}
+            registerChild={registerChild}
             onScroll={onScroll}
             masonryRef={masonryRef}
           />
@@ -49,6 +50,7 @@ function ImageList({ images, hasMore, fetchMoreData }: ImageListProps) {
             isRowLoaded={isRowLoaded}
             loadMoreRows={loadMoreRows}
             rowCount={hasMore ? images.length + 1 : images.length}
+            registerChild={registerChild}
             onScroll={onScroll}
           />
         );

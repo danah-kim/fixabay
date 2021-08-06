@@ -1,12 +1,12 @@
 import { memo } from 'react';
-import styled from 'styled-components/macro';
+import styled, { css } from 'styled-components/macro';
 import tw from 'twin.macro';
 import { formatNumberWithCommas } from 'lib/utils';
 import Menu from './ImageDetailMenu';
 import UserProfile from 'components/common/UserProfile';
 
 const Container = styled.div`
-  ${tw`flex items-center px-8 pt-4 pb-8 mx-auto grid gap-6`};
+  ${tw`flex items-center px-8 pt-4 pb-8 mx-auto grid gap-4`};
   grid-template-columns: repeat(1, 1fr 3fr 1fr);
 
   @media (max-width: 755px) {
@@ -23,10 +23,20 @@ const User = styled.div`
 `;
 const Statistics = styled.div`
   ${tw`box-border flex grid gap-4`};
-  grid-template-columns: repeat(3, minmax(min-content, 160px));
+  grid-template-columns: repeat(3, minmax(min-content, 120px));
+
+  @media (max-width: 1007px) {
+    gap: 8px;
+    grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+  }
 `;
 const Statistic = styled.div`
   ${tw`flex flex-col box-border text-xs text-gray-800 font-semibold`};
+`;
+const Downloads = styled(Statistic)`
+  @media (max-width: 1007px) {
+    display: none;
+  }
 `;
 const Label = tw.p`text-gray-500 font-medium`;
 
@@ -67,10 +77,10 @@ function ImageDetailInfo({
           <Label>Views</Label>
           {formatNumberWithCommas(views)}
         </Statistic>
-        <Statistic>
+        <Downloads>
           <Label>Downloads</Label>
           {formatNumberWithCommas(downloads)}
-        </Statistic>
+        </Downloads>
       </Statistics>
       {visibleMenu && <Menu id={id} url={url} />}
     </Container>

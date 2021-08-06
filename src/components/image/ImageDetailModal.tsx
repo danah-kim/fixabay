@@ -5,6 +5,7 @@ import styled from 'styled-components/macro';
 import tw from 'twin.macro';
 import { useToggle, useWindowSize } from 'react-use';
 import { CgClose } from 'react-icons/cg';
+import isMobile from 'ismobilejs';
 import { Image } from 'types/api';
 import NotFound from 'components/error/NotFound';
 import UserProfile from 'components/common/UserProfile';
@@ -14,7 +15,7 @@ import Menu from './ImageDetailMenu';
 
 Modal.setAppElement('#portal');
 
-const Icon = tw.button`absolute top-0 left-0 p-3 text-2xl text-white text-opacity-80 hover:text-opacity-100 transition duration-150 ease-in-out`;
+const Icon = tw.button`absolute top-0 left-0 p-3 text-2xl text-white text-opacity-80 hover:text-opacity-100 transition duration-150 ease-in-out pointer-events-none`;
 
 const Paper = styled.div`
   ${tw`bg-white rounded-3xl shadow-xl min-w-0 m-auto`};
@@ -67,8 +68,11 @@ function ImageDetailModal({ isLoading, isError, data }: ImageDetailModalProps) {
   const history = useHistory();
   const { width } = useWindowSize();
   const [loaded, toggle] = useToggle(false);
-  const maxWidth = width > 775 ? 'calc((100vh - 280px) * 1.5)' : '100%';
-  const visibleMobile = width < 581;
+  const isMobileDevice = isMobile(window.navigator).phone || isMobile(window.navigator).tablet;
+  const maxWidth = width > 1260 ? 'calc((100vh - 280px) * 1.5)' : '100%';
+  const hiddenMobile = width > 580 || !isMobileDevice;
+
+  console.log(width, { isMobileDevice, hiddenMobile, loaded });
 
   const closeModal = useCallback(
     (e: MouseEvent | KeyboardEvent) => {
@@ -100,7 +104,7 @@ function ImageDetailModal({ isLoading, isError, data }: ImageDetailModalProps) {
         </Paper>
       ) : (
         <Paper>
-          {visibleMobile && loaded && (
+          {!hiddenMobile && loaded && (
             <MobileInfoBox>
               <UserProfile
                 user={data.user}
@@ -114,7 +118,7 @@ function ImageDetailModal({ isLoading, isError, data }: ImageDetailModalProps) {
             <Img src={data.webformatURL} alt={`${data.id}`} style={{ maxWidth }} onLoad={onLoad} />
           </ImageBox>
           <Info
-            visibleMenu={!visibleMobile && loaded}
+            visibleMenu={hiddenMobile && loaded}
             maxWidth={maxWidth}
             id={data.id}
             user={data.user}

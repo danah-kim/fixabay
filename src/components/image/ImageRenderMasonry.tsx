@@ -1,4 +1,4 @@
-import { memo, MutableRefObject, useCallback, useEffect, useMemo } from 'react';
+import { memo, MutableRefObject, ReactNode, useCallback, useMemo } from 'react';
 import {
   AutoSizer,
   CellMeasurer,
@@ -23,18 +23,20 @@ interface ImageRenderMasonryProps {
   isRowLoaded: (params: Index) => boolean;
   loadMoreRows: (params: IndexRange) => Promise<unknown>;
   rowCount: number;
+  registerChild: (element?: ReactNode) => void;
   onScroll: OnScrollCallback;
   masonryRef: MutableRefObject<Masonry | null>;
 }
 
 function ImageRenderMasonry({
-  masonryRef,
   images,
   height,
   isRowLoaded,
   loadMoreRows,
   rowCount,
+  registerChild,
   onScroll,
+  masonryRef,
 }: ImageRenderMasonryProps) {
   const cellMeasurerCache = useMemo(
     () =>
@@ -56,11 +58,6 @@ function ImageRenderMasonry({
       }),
     [cellMeasurerCache]
   );
-
-  useEffect(() => {
-    // masonryRef.current?.clearCellPositions();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const onResize = useCallback(
     ({ width }: Size) => {
@@ -102,18 +99,20 @@ function ImageRenderMasonry({
               defaultWidth={CARD.width}
             >
               {({ itemsWithSizes }) => (
-                <Masonry
-                  ref={masonryRef}
-                  autoHeight={false}
-                  width={width}
-                  height={height}
-                  cellMeasurerCache={cellMeasurerCache}
-                  cellPositioner={cellPositioner!}
-                  cellCount={itemsWithSizes.length}
-                  cellRenderer={cellRenderer(itemsWithSizes)}
-                  onCellsRendered={onRowsRendered}
-                  onScroll={onScroll}
-                />
+                <div ref={registerChild}>
+                  <Masonry
+                    ref={masonryRef}
+                    autoHeight={false}
+                    width={width}
+                    height={height}
+                    cellMeasurerCache={cellMeasurerCache}
+                    cellPositioner={cellPositioner!}
+                    cellCount={itemsWithSizes.length}
+                    cellRenderer={cellRenderer(itemsWithSizes)}
+                    onCellsRendered={onRowsRendered}
+                    onScroll={onScroll}
+                  />
+                </div>
               )}
             </ImageMeasurer>
           )}

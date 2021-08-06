@@ -9,7 +9,7 @@ import DownloadButton from 'components/common/DownloadButton';
 import Portal from 'components/common/Portal';
 
 const Container = styled.div`
-  ${tw`flex py-4 justify-end`};
+  ${tw`py-4 flex`};
 `;
 const Icon = styled.button`
   ${tw`mr-4 border-2 border-solid border-green-500 p-2 cursor-pointer transition duration-300 ease-in-out hover:bg-green-500 rounded-full text-green-500 hover:text-white`};
