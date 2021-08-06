@@ -100,6 +100,13 @@ const CustomStyles = createGlobalStyle`
       width: 5796px !important;
     }
   }
+  .ReactModal__Content {
+    transition: all 0.8s cubic-bezier(0.77, 0, 0.175, 1) 0s;
+
+    @media (max-width: 755px) {
+      margin: 15% 0 0 !important;
+    }
+  }
 `;
 
 export default CustomStyles;

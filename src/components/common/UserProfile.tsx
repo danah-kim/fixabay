@@ -1,8 +1,7 @@
-import { memo } from 'react';
+import { CSSProperties, memo } from 'react';
 import styled from 'styled-components/macro';
 import tw from 'twin.macro';
 import { AiOutlineSmile } from 'react-icons/ai';
-import { Image } from 'types/api';
 
 const Container = styled.div`
   ${tw`p-2 pb-4 box-border`};
@@ -15,11 +14,15 @@ const Avater = styled.div({
 const Name = tw.div`mx-1 flex-auto text-sm text-gray-800`;
 const Img = tw.img`w-full rounded-2xl`;
 
-type UserProfileProps = Pick<Image, 'user' | 'userImageURL'>;
+interface UserProfileProps {
+  user: string;
+  userImageURL: string;
+  style?: CSSProperties;
+}
 
-function UserProfile({ user, userImageURL }: UserProfileProps) {
+function UserProfile({ user, userImageURL, style }: UserProfileProps) {
   return (
-    <Container>
+    <Container style={style}>
       <Info>
         <Avater>{userImageURL ? <Img src={userImageURL} alt={user} /> : <AiOutlineSmile />}</Avater>
         <Name>{user}</Name>
