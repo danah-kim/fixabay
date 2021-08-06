@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import useReactQueryImage from 'hooks/useReactQueryImage';
+import useReactQueryImage from 'lib/hooks/useReactQueryImage';
 import ImageDetailModal from 'components/image/ImageDetailModal';
 
 function ReactQueryDetailView() {

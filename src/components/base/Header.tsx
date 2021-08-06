@@ -3,7 +3,7 @@ import { SubmitHandler } from 'react-hook-form';
 import styled from 'styled-components/macro';
 import tw from 'twin.macro';
 import { useRecoilValue } from 'recoil';
-import shadowToggleState from 'recoil/shadowToggle';
+import shadowToggleState from 'lib/recoil/shadowToggle';
 import { Menu as MenuT, SearchFormValues } from 'types/common';
 import Menu from './HeaderMenu';
 import Search from './HeaderSearch';

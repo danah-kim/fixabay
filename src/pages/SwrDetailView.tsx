@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import useSwrImage from 'hooks/useSwrImage';
+import useSwrImage from 'lib/hooks/useSwrImage';
 import ImageDetailModal from 'components/image/ImageDetailModal';
 
 function SwrDetailView() {

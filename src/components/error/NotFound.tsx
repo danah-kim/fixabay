@@ -5,7 +5,7 @@ import tw from 'twin.macro';
 import { RiEmotionSadLine } from 'react-icons/ri';
 import { FaRegSurprise } from 'react-icons/fa';
 import { useRecoilValue } from 'recoil';
-import searchState from 'recoil/search';
+import searchState from 'lib/recoil/search';
 import routes from 'routes';
 
 const Container = styled.div`

@@ -6,7 +6,7 @@ import tw from 'twin.macro';
 import { GoSearch } from 'react-icons/go';
 import { IoCloseCircle } from 'react-icons/io5';
 import { STORAGE_KEY } from 'constant';
-import useLocalStorage from 'hooks/useLocalStorage';
+import useLocalStorage from 'lib/hooks/useLocalStorage';
 import { SearchFormValues } from 'types/common';
 
 const Container = styled.div`

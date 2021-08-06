@@ -3,7 +3,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import App from 'App';
 import { GlobalStyles } from 'twin.macro';
 import { RecoilRoot } from 'recoil';
-import CustomStyles from 'styles/CustomStyles';
+import CustomStyles from 'lib/styles/CustomStyles';
 import reportWebVitals from './reportWebVitals';
 import 'react-virtualized/styles.css';
 import 'tailwindcss/tailwind.css';
