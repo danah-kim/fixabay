@@ -11,7 +11,7 @@ const List = styled.div`
 const MenuBase = tw(Link)`h-12 px-2 whitespace-nowrap font-semibold`;
 const Logo = tw(MenuBase)`mr-2 text-gray-800`;
 const Item = styled(MenuBase)<{ $current: boolean }>`
-  ${tw`rounded-3xl`}
+  ${tw`rounded-3xl`};
   ${({ $current }) => ($current ? tw`bg-green-500 text-white` : tw`bg-white text-green-500`)};
 
   :not(:last-of-type) {

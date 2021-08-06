@@ -6,7 +6,7 @@ const CustomStyles = createGlobalStyle`
   ${normalize}
   
   body {
-    ${tw`antialiased`}
+    ${tw`antialiased`};
     overflow: hidden;
   }
   a {

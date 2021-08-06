@@ -10,7 +10,7 @@ import useLocalStorage from 'lib/hooks/useLocalStorage';
 import { SearchFormValues } from 'types/common';
 
 const Container = styled.div`
-  ${tw`px-2 flex-auto min-h-0 min-w-0`}
+  ${tw`px-2 flex-auto min-h-0 min-w-0`};
 
   @media (min-width: 850px) {
     min-width: 407px;

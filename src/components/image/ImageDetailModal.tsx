@@ -14,14 +14,14 @@ import Menu from './ImageDetailMenu';
 Modal.setAppElement('#root');
 
 const Paper = styled.div`
-  ${tw`bg-white rounded-3xl shadow-xl min-w-0 m-auto`}
+  ${tw`bg-white rounded-3xl shadow-xl min-w-0 m-auto`};
 
   @media (max-width: 755px) {
     border-radius: 24px;
   }
 `;
 const MobileInfoBox = styled.div`
-  ${tw`px-6 pt-2 pb-4 flex items-center justify-between flex-wrap`}
+  ${tw`px-6 pt-2 pb-4 flex items-center justify-between flex-wrap`};
 
   @media (min-width: 581px) {
     display: none;
@@ -35,7 +35,7 @@ const ImageBox = styled.div`
   }
 `;
 const Img = styled.img`
-  ${tw`w-full block rounded-2xl`}
+  ${tw`w-full block rounded-2xl`};
   margin: 0 auto;
 
   @media (max-width: 755px) {

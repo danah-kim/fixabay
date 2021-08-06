@@ -9,10 +9,10 @@ import searchState from 'lib/recoil/search';
 import routes from 'routes';
 
 const Container = styled.div`
-  ${tw`w-full flex flex-col justify-items-center items-center py-12 mt-14`}
+  ${tw`w-full flex flex-col justify-items-center items-center py-12 mt-14`};
 `;
 const Icon = styled.div`
-  ${tw`w-28 h-28 rounded-full mx-auto mb-6`}
+  ${tw`w-28 h-28 rounded-full mx-auto mb-6`};
 
   svg {
     ${tw`text-green-500 w-full h-full`};

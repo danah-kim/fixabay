@@ -18,7 +18,7 @@ const Container = styled.div`
 const Box = tw.div`relative h-full w-full`;
 const ImageBox = styled.div<{ loaded: boolean }>`
   ${tw`rounded-2xl h-full box-border`};
-  ${({ loaded }) => !loaded && tw`bg-gray-100`}
+  ${({ loaded }) => !loaded && tw`bg-gray-100`};
 `;
 const Img = tw.img`w-full rounded-2xl`;
 

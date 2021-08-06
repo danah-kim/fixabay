@@ -14,13 +14,13 @@ const Container = styled.div<{ $visibleInfo: boolean }>`
   opacity: ${({ $visibleInfo }) => +$visibleInfo};
 `;
 const Drop = styled(Base)`
-  ${tw`bg-gradient-to-b from-transparent via-transparent to-black opacity-60`}
+  ${tw`bg-gradient-to-b from-transparent via-transparent to-black opacity-60`};
 `;
 const Top = tw.div`box-border m-3 float-right pointer-events-auto`;
 const Bottom = tw.div`absolute left-0 right-0 bottom-0`;
 const Statistics = tw.div`box-border p-3 pb-2.5 flex`;
 const Statistic = styled.div`
-  ${tw`text-white flex items-center box-border text-xs font-medium`}
+  ${tw`text-white flex items-center box-border text-xs font-medium`};
 
   :not(:last-of-type) {
     margin-right: 8px;
