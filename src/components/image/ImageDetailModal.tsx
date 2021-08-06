@@ -39,11 +39,11 @@ const Img = styled.img`
   margin: 0 auto;
 
   @media (max-width: 755px) {
-    border-radius: 0px;
+    border-radius: 24px 24px 0 0;
     max-width: 100%;
   }
-  @media (min-width: 581px) {
-    border-radius: 24px 24px 0 0;
+  @media (max-width: 581px) {
+    border-radius: 0;
   }
 `;
 

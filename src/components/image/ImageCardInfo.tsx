@@ -2,15 +2,16 @@ import { memo } from 'react';
 import styled from 'styled-components/macro';
 import tw from 'twin.macro';
 import { TiHeart, TiEye } from 'react-icons/ti';
+import isMobile from 'ismobilejs';
 import { IoMdCloudDownload } from 'react-icons/io/';
 import { Image } from 'types/api';
 import DownloadButton from 'components/common/DownloadButton';
 import { formatNumberWithK } from 'lib/utils';
 
 const Base = tw.div`absolute inset-0 rounded-2xl`;
-const Container = styled.div<{ $isHover: boolean }>`
+const Container = styled.div<{ $visibleInfo: boolean }>`
   ${tw`box-border transition-opacity duration-150 ease-in-out pointer-events-none`};
-  opacity: ${({ $isHover }) => +$isHover};
+  opacity: ${({ $visibleInfo }) => +$visibleInfo};
 `;
 const Drop = styled(Base)`
   ${tw`bg-gradient-to-b from-transparent via-transparent to-black opacity-60`}
@@ -35,19 +36,22 @@ interface ImageCardInfoProps extends Pick<Image, 'id' | 'largeImageURL' | 'likes
 }
 
 function ImageCardInfo({ isHover, id, largeImageURL, likes, views, downloads }: ImageCardInfoProps) {
+  const isMobileDevice = isMobile(window.navigator).phone || isMobile(window.navigator).tablet;
+  const visibleInfo = isMobileDevice || isHover;
+
   return (
     <>
-      <Container $isHover={isHover}>
+      <Container $visibleInfo={visibleInfo}>
         <Drop />
       </Container>
-      <Container $isHover={isHover}>
+      <Container $visibleInfo={visibleInfo}>
         <Base>
           <Top>
             <DownloadButton name={`${id}`} url={largeImageURL} style={{ marginLeft: 'auto' }} />
           </Top>
         </Base>
       </Container>
-      <Container $isHover={isHover}>
+      <Container $visibleInfo={visibleInfo}>
         <Bottom>
           <Statistics>
             <Statistic>

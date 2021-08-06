@@ -29,7 +29,9 @@ const CustomStyles = createGlobalStyle`
   :focus {
     outline: none !important;
   }
-  
+  .ReactVirtualized__Masonry {
+    padding-top: 80px;
+  }
   .ReactVirtualized__Masonry__innerScrollContainer {
     margin-left: auto;
     margin-right: auto;

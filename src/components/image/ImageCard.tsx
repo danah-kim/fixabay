@@ -10,6 +10,10 @@ import UserProfile from 'components/common/UserProfile';
 
 const Container = styled.div`
   ${tw`pb-4 px-2 h-full box-border flex flex-col`};
+
+  @media (max-width: 505px) {
+    padding: 0 0 16px;
+  }
 `;
 const Box = tw.div`relative h-full w-full`;
 const ImageBox = styled.div<{ loaded: boolean }>`
