@@ -19,7 +19,7 @@ interface ImageListRenderProps {
   images: Image[];
   height: number;
   isRowLoaded: (params: Index) => boolean;
-  loadMoreRows: (params: IndexRange) => Promise<any>;
+  loadMoreRows: (params: IndexRange) => Promise<unknown>;
   rowCount: number;
   onScroll: OnScrollCallback;
 }

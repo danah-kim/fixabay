@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import Modal from 'react-modal';
 import styled from 'styled-components/macro';
 import tw from 'twin.macro';
-import { useWindowSize } from 'react-use';
+import { useToggle, useWindowSize } from 'react-use';
 import { CgClose } from 'react-icons/cg';
 import { Image } from 'types/api';
 import NotFound from 'components/error/NotFound';
@@ -25,10 +25,6 @@ const Paper = styled.div`
 `;
 const MobileInfoBox = styled.div`
   ${tw`px-6 pt-2 pb-4 flex items-center justify-between flex-wrap`};
-
-  @media (min-width: 581px) {
-    display: none;
-  }
 `;
 const ImageBox = styled.div`
   padding: 32px 32px 16px;
@@ -70,7 +66,9 @@ interface ImageDetailModalProps {
 function ImageDetailModal({ isLoading, isError, data }: ImageDetailModalProps) {
   const history = useHistory();
   const { width } = useWindowSize();
+  const [loaded, toggle] = useToggle(false);
   const maxWidth = width > 775 ? 'calc((100vh - 280px) * 1.5)' : '100%';
+  const visibleMobile = width < 581;
 
   const closeModal = useCallback(
     (e: MouseEvent | KeyboardEvent) => {
@@ -85,6 +83,10 @@ function ImageDetailModal({ isLoading, isError, data }: ImageDetailModalProps) {
     [history]
   );
 
+  const onLoad = useCallback(() => {
+    toggle();
+  }, [toggle]);
+
   return (
     <Modal isOpen className="modal-content" onRequestClose={closeModal} style={customStyles} contentLabel="Image Modal">
       <Icon>
@@ -98,19 +100,21 @@ function ImageDetailModal({ isLoading, isError, data }: ImageDetailModalProps) {
         </Paper>
       ) : (
         <Paper>
-          <MobileInfoBox>
-            <UserProfile
-              user={data.user}
-              userImageURL={data.userImageURL}
-              style={{ padding: '12px 16px 0 0', fontWeight: 700 }}
-            />
-            <Menu id={data.id} url={data.largeImageURL || data.webformatURL} style={{ padding: '12px 0 0' }} />
-          </MobileInfoBox>
+          {visibleMobile && loaded && (
+            <MobileInfoBox>
+              <UserProfile
+                user={data.user}
+                userImageURL={data.userImageURL}
+                style={{ padding: '12px 16px 0 0', fontWeight: 700 }}
+              />
+              <Menu id={data.id} url={data.largeImageURL || data.webformatURL} style={{ padding: '12px 0 0' }} />
+            </MobileInfoBox>
+          )}
           <ImageBox>
-            <Img src={data.webformatURL} alt={`${data.id}`} style={{ maxWidth }} />
+            <Img src={data.webformatURL} alt={`${data.id}`} style={{ maxWidth }} onLoad={onLoad} />
           </ImageBox>
           <Info
-            width={width}
+            visibleMenu={!visibleMobile && loaded}
             maxWidth={maxWidth}
             id={data.id}
             user={data.user}

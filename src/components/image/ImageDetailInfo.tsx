@@ -31,7 +31,7 @@ const Statistic = styled.div`
 const Label = tw.p`text-gray-500 font-medium`;
 
 interface ImageDetailInfoProps {
-  width: number;
+  visibleMenu: boolean;
   maxWidth: string;
   id: number;
   user: string;
@@ -43,7 +43,7 @@ interface ImageDetailInfoProps {
 }
 
 function ImageDetailInfo({
-  width,
+  visibleMenu,
   maxWidth,
   id,
   user,
@@ -72,7 +72,7 @@ function ImageDetailInfo({
           {formatNumberWithCommas(downloads)}
         </Statistic>
       </Statistics>
-      {width > 580 && <Menu id={id} url={url} />}
+      {visibleMenu && <Menu id={id} url={url} />}
     </Container>
   );
 }

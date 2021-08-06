@@ -35,8 +35,8 @@ function ImageCard({
   const [isHover, toggle] = useToggle(false);
 
   const handleHover = useCallback(() => {
-    toggle(!isHover);
-  }, [isHover, toggle]);
+    toggle();
+  }, [toggle]);
 
   return (
     <Container>
