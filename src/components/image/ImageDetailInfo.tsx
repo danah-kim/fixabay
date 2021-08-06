@@ -2,11 +2,12 @@ import { memo } from 'react';
 import styled from 'styled-components/macro';
 import tw from 'twin.macro';
 import { formatNumberWithCommas } from 'lib/utils';
-import ImageDetailMenu from './ImageDetailMenu';
+import Menu from './ImageDetailMenu';
 import UserProfile from 'components/common/UserProfile';
 
 const Container = styled.div`
-  ${tw`flex items-center px-8 pt-4 pb-8 flex-wrap mx-auto`};
+  ${tw`flex items-center px-8 pt-4 pb-8 mx-auto grid gap-6`};
+  grid-template-columns: repeat(1, 1fr 3fr 1fr);
 
   @media (max-width: 755px) {
     padding: 12px 16px;
@@ -16,31 +17,18 @@ const Container = styled.div`
   }
 `;
 const User = styled.div`
-  padding-right: 16px;
-
   @media (max-width: 580px) {
     display: none;
   }
-  @media (max-width: 755px) {
-    padding-right: 20px;
-  }
 `;
 const Statistics = styled.div`
-  ${tw`box-border flex pr-4 py-4 mr-auto`};
-
-  @media (max-width: 580px) {
-    padding: 0;
-  }
+  ${tw`box-border flex grid gap-4`};
+  grid-template-columns: repeat(3, minmax(min-content, 160px));
 `;
 const Statistic = styled.div`
   ${tw`flex flex-col box-border text-xs text-gray-800 font-semibold`};
-  min-width: 84px;
-
-  p {
-    font-weight: 500;
-  }
 `;
-const Label = tw.p`text-gray-500`;
+const Label = tw.p`text-gray-500 font-medium`;
 
 interface ImageDetailInfoProps {
   width: number;
@@ -68,7 +56,7 @@ function ImageDetailInfo({
   return (
     <Container style={{ maxWidth }}>
       <User>
-        <UserProfile user={user} userImageURL={userImageURL} style={{ padding: 0 }} />
+        <UserProfile user={user} userImageURL={userImageURL} style={{ padding: 0, fontWeight: 700 }} />
       </User>
       <Statistics>
         <Statistic>
@@ -84,7 +72,7 @@ function ImageDetailInfo({
           {formatNumberWithCommas(downloads)}
         </Statistic>
       </Statistics>
-      {width > 580 && <ImageDetailMenu id={id} url={url} />}
+      {width > 580 && <Menu id={id} url={url} />}
     </Container>
   );
 }

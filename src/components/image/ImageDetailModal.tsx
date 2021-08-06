@@ -4,6 +4,7 @@ import Modal from 'react-modal';
 import styled from 'styled-components/macro';
 import tw from 'twin.macro';
 import { useWindowSize } from 'react-use';
+import { CgClose } from 'react-icons/cg';
 import { Image } from 'types/api';
 import NotFound from 'components/error/NotFound';
 import UserProfile from 'components/common/UserProfile';
@@ -11,7 +12,9 @@ import HashLoader from 'components/common/HashLoader';
 import Info from './ImageDetailInfo';
 import Menu from './ImageDetailMenu';
 
-Modal.setAppElement('#root');
+Modal.setAppElement('#portal');
+
+const Icon = tw.button`absolute top-0 left-0 p-3 text-2xl text-white text-opacity-80 hover:text-opacity-100 transition duration-150 ease-in-out`;
 
 const Paper = styled.div`
   ${tw`bg-white rounded-3xl shadow-xl min-w-0 m-auto`};
@@ -40,7 +43,6 @@ const Img = styled.img`
 
   @media (max-width: 755px) {
     border-radius: 24px 24px 0 0;
-    max-width: 100%;
   }
   @media (max-width: 581px) {
     border-radius: 0;
@@ -85,6 +87,9 @@ function ImageDetailModal({ isLoading, isError, data }: ImageDetailModalProps) {
 
   return (
     <Modal isOpen className="modal-content" onRequestClose={closeModal} style={customStyles} contentLabel="Image Modal">
+      <Icon>
+        <CgClose />
+      </Icon>
       {isLoading ? (
         <HashLoader />
       ) : isError || !data ? (
@@ -94,7 +99,11 @@ function ImageDetailModal({ isLoading, isError, data }: ImageDetailModalProps) {
       ) : (
         <Paper>
           <MobileInfoBox>
-            <UserProfile user={data.user} userImageURL={data.userImageURL} style={{ padding: '12px 16px 0 0' }} />
+            <UserProfile
+              user={data.user}
+              userImageURL={data.userImageURL}
+              style={{ padding: '12px 16px 0 0', fontWeight: 700 }}
+            />
             <Menu id={data.id} url={data.largeImageURL || data.webformatURL} style={{ padding: '12px 0 0' }} />
           </MobileInfoBox>
           <ImageBox>
