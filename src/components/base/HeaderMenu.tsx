@@ -21,6 +21,9 @@ const Item = styled(MenuBase)<{ $current: boolean }>`
     ${tw`transition duration-300 ease-in-out shadow-md cursor-pointer`};
     ${({ $current }) => !$current && tw`bg-green-500 text-white`};
   }
+  @media (max-width: 580px) {
+    display: none;
+  }
 `;
 const Inner = tw.div`h-full flex items-center`;
 

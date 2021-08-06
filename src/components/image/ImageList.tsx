@@ -32,7 +32,6 @@ function ImageList({ images, hasMore, fetchMoreData }: ImageListProps) {
   return (
     <WindowScroller>
       {({ width, height }) => {
-        console.log('?', width, height);
         return width > 505 ? (
           <RenderMasonry
             images={images}
