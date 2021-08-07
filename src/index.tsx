@@ -12,7 +12,7 @@ ReactDOM.render(
   <>
     <GlobalStyles />
     <CustomStyles />
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
       <RecoilRoot>
         <App />
       </RecoilRoot>

@@ -49,6 +49,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "gh-pages": "^3.2.3",
     "husky": "^7.0.1",
     "lint-staged": "^11.0.0",
     "prettier": "^2.3.2",
@@ -60,9 +61,10 @@
   },
   "scripts": {
     "start": "BROWSER=none react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "react-app-rewired test",
-    "prepare": "husky install"
+    "build": "GENERATE_SOURCEMAP=false react-app-rewired build",
+    "prepare": "husky install",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,md}": [
@@ -101,5 +103,6 @@
         "from": "styled-components"
       }
     }
-  }
+  },
+  "homepage": "http://sweetmilkys.github.io/fixabay"
 }

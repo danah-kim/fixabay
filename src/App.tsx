@@ -1,24 +1,24 @@
 import { Suspense } from 'react';
-import { Switch, Route, Link, useLocation } from 'react-router-dom';
+import { Switch, Route, useLocation, Redirect } from 'react-router-dom';
 import { Location } from 'history';
 import { AxiosError } from 'axios';
 import { SWRConfig, cache, mutate } from 'swr';
 import SWRDevtools from '@jjordy/swr-devtools';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import styled from 'styled-components/macro';
-import tw from 'twin.macro';
+// import styled from 'styled-components/macro';
+// import tw from 'twin.macro';
 import routes, { reactQueryRoutes, swrRoutes } from 'routes';
 import NotFound from 'components/error/NotFound';
 import HashLoader from 'components/common/HashLoader';
 
-const Button = styled.button<{ primary?: boolean }>`
-  ${tw`py-2 px-4 m-4 text-base border-2 border-solid border-green-500 rounded-xl`};
-  ${({ primary }) =>
-    primary
-      ? tw`bg-green-500 text-white hover:bg-white hover:text-green-500`
-      : tw`bg-white text-green-500 hover:bg-green-500 hover:text-white`};
-`;
+// const Button = styled.button<{ primary?: boolean }>`
+//   ${tw`py-2 px-4 m-4 text-base border-2 border-solid border-green-500 rounded-xl`};
+//   ${({ primary }) =>
+//     primary
+//       ? tw`bg-green-500 text-white hover:bg-white hover:text-green-500`
+//       : tw`bg-white text-green-500 hover:bg-green-500 hover:text-white`};
+// `;
 
 export interface LocationState {
   background?: Location<LocationState>;
@@ -32,13 +32,14 @@ function App() {
     <Suspense fallback={<HashLoader />}>
       <Switch>
         <Route exact path="/">
-          {Object.entries(routes)
+          <Redirect to={routes.reactQuery.path} />
+          {/* {Object.entries(routes)
             .filter(([_, { isPage, isNave }]) => isPage && !isNave)
             .map(([key, { path }]) => (
               <Button key={key} primary={key.includes('react')}>
                 <Link to={path}>{key}</Link>
               </Button>
-            ))}
+            ))} */}
         </Route>
         <Route path={swrRoutes.swr.path}>
           <SwrApp background={background || location} />

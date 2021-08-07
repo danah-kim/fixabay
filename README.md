@@ -1,32 +1,22 @@
 # fixabay
 
+Pixabay API를 이용하여 만든 무료 이미지 검색 사이트
+
+## 메인 스택
+
+- React
+- Typescript
+- SWR / ReactQuery
+- tailwindcss
+- styled-components
+- recoil
+
+## 참고
+
+SWR과 ReactQuery를 비교하기 위해서 2가지 버전으로 페이지를 만들었습니다.
+
+배포버전에는 ReactQuery를 사용한 경로로 redirect 됩니다. ([SWR 버전보기]("https://sweetmilkys.github.io/fixabay/swr"))
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `yarn start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
