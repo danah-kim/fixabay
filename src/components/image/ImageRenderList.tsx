@@ -1,38 +1,28 @@
-import { memo, ReactNode, useCallback } from 'react';
-import {
-  AutoSizer,
-  CellMeasurer,
-  CellMeasurerCache,
-  Index,
-  InfiniteLoader,
-  OnScrollCallback,
-  List,
-  ListRowProps,
-  IndexRange,
-} from 'react-virtualized';
-import ImageMeasurer, { ImageMeasurerProperties } from 'react-virtualized-image-measurer';
+import { memo, useCallback } from 'react';
+import { AutoSizer, CellMeasurer, CellMeasurerCache, List, ListRowProps, IndexRange } from 'react-virtualized';
+import ImageMeasurer, { ImageMeasurerProperties, Size } from 'react-virtualized-image-measurer';
 import { CARD } from 'constant';
 import { Image } from 'types/api';
 import ImageCard from './ImageCard';
 
 interface ImageListRenderProps {
   images: Image[];
+  registerChild: (registeredChild: unknown) => void;
+  onRowsRendered: (params: IndexRange) => void;
   height: number;
-  isRowLoaded: (params: Index) => boolean;
-  loadMoreRows: (params: IndexRange) => Promise<unknown>;
-  rowCount: number;
-  registerChild: (element?: ReactNode) => void;
-  onScroll: OnScrollCallback;
+  isScrolling: boolean;
+  scrollTop: number;
+  onChildScroll: (params: { scrollTop: number }) => void;
 }
 
 function ImageRenderList({
   images,
-  height,
-  isRowLoaded,
-  loadMoreRows,
-  rowCount,
   registerChild,
-  onScroll,
+  onRowsRendered,
+  height,
+  isScrolling,
+  scrollTop,
+  onChildScroll,
 }: ImageListRenderProps) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const cellMeasurerCache = new CellMeasurerCache({
@@ -41,9 +31,12 @@ function ImageRenderList({
     fixedWidth: true,
   });
 
-  const onResize = useCallback(() => {
-    cellMeasurerCache.clearAll();
-  }, [cellMeasurerCache]);
+  const onResize = useCallback(
+    ({ width }: Size) => {
+      cellMeasurerCache.clearAll();
+    },
+    [cellMeasurerCache]
+  );
 
   const rowRenderer = useCallback(
     (itemsWithSizes: ImageMeasurerProperties['itemsWithSizes']) =>
@@ -69,35 +62,33 @@ function ImageRenderList({
   );
 
   return (
-    <InfiniteLoader isRowLoaded={isRowLoaded} loadMoreRows={loadMoreRows} rowCount={rowCount}>
-      {({ onRowsRendered }) => (
-        <AutoSizer disableHeight onResize={onResize}>
-          {({ width }) => (
-            <ImageMeasurer
-              items={images}
-              image={(item) => item.webformatURL}
-              defaultHeight={CARD.height}
-              defaultWidth={CARD.width}
-            >
-              {({ itemsWithSizes }) => (
-                <div ref={registerChild}>
-                  <List
-                    deferredMeasurementCache={cellMeasurerCache}
-                    width={width}
-                    height={height}
-                    rowCount={itemsWithSizes.length}
-                    rowHeight={cellMeasurerCache.rowHeight}
-                    rowRenderer={rowRenderer(itemsWithSizes)}
-                    onRowsRendered={onRowsRendered}
-                    onScroll={onScroll}
-                  />
-                </div>
-              )}
-            </ImageMeasurer>
+    <AutoSizer disableHeight onResize={onResize}>
+      {({ width }) => (
+        <ImageMeasurer
+          items={images}
+          image={(item) => item.webformatURL}
+          defaultHeight={CARD.height}
+          defaultWidth={CARD.width}
+        >
+          {({ itemsWithSizes }) => (
+            <List
+              ref={registerChild}
+              onRowsRendered={onRowsRendered}
+              width={width}
+              autoHeight
+              height={height}
+              deferredMeasurementCache={cellMeasurerCache}
+              rowHeight={cellMeasurerCache.rowHeight}
+              rowCount={itemsWithSizes.length}
+              rowRenderer={rowRenderer(itemsWithSizes)}
+              isScrolling={isScrolling}
+              scrollTop={scrollTop}
+              onScroll={onChildScroll}
+            />
           )}
-        </AutoSizer>
+        </ImageMeasurer>
       )}
-    </InfiniteLoader>
+    </AutoSizer>
   );
 }
 

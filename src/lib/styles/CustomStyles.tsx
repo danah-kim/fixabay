@@ -7,7 +7,6 @@ const CustomStyles = createGlobalStyle`
   
   body {
     ${tw`antialiased`};
-    overflow: hidden;
   }
   a {
     color: inherit;
@@ -28,10 +27,6 @@ const CustomStyles = createGlobalStyle`
 
   :focus {
     outline: none !important;
-  }
-  .ReactVirtualized__Grid,
-  .ReactVirtualized__Masonry {
-    padding-top: 80px;
   }
   .ReactVirtualized__Masonry__innerScrollContainer {
     margin-left: auto;

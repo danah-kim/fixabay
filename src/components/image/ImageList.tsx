@@ -1,6 +1,7 @@
 import { memo, useCallback, useRef } from 'react';
-import { Index, Masonry, WindowScroller, OnScrollCallback, IndexRange } from 'react-virtualized';
+import { Index, Masonry, WindowScroller, InfiniteLoader, WindowScrollerProps } from 'react-virtualized';
 import { useRecoilState } from 'recoil';
+import isMobile from 'ismobilejs';
 import shadowToggleState from 'lib/recoil/shadowToggle';
 import { Image } from 'types/api';
 import RenderMasonry from './ImageRenderMasonry';
@@ -15,6 +16,7 @@ interface ImageListProps {
 function ImageList({ images, hasMore, fetchMoreData }: ImageListProps) {
   const [shadowToggle, setShadowToggle] = useRecoilState(shadowToggleState);
   const masonryRef = useRef<Masonry | null>(null);
+  const isMobileDevice = isMobile(window.navigator).phone || isMobile(window.navigator).tablet;
 
   const isRowLoaded = useCallback(({ index }: Index) => !!images[index], [images]);
 
@@ -22,7 +24,7 @@ function ImageList({ images, hasMore, fetchMoreData }: ImageListProps) {
     if (hasMore) fetchMoreData();
   }, [fetchMoreData, hasMore]);
 
-  const onScroll: OnScrollCallback = useCallback(
+  const onScroll: WindowScrollerProps['onScroll'] = useCallback(
     ({ scrollTop }) => {
       if (shadowToggle !== !!scrollTop) setShadowToggle(!shadowToggle);
     },
@@ -30,32 +32,40 @@ function ImageList({ images, hasMore, fetchMoreData }: ImageListProps) {
   );
 
   return (
-    <WindowScroller>
-      {({ width, height, registerChild }) => {
-        return width > 505 ? (
-          <RenderMasonry
-            images={images}
-            height={height}
-            isRowLoaded={isRowLoaded}
-            loadMoreRows={loadMoreRows}
-            rowCount={hasMore ? images.length + 1 : images.length}
-            registerChild={registerChild}
-            onScroll={onScroll}
-            masonryRef={masonryRef}
-          />
-        ) : (
-          <RenderList
-            images={images}
-            height={height}
-            isRowLoaded={isRowLoaded}
-            loadMoreRows={loadMoreRows}
-            rowCount={hasMore ? images.length + 1 : images.length}
-            registerChild={registerChild}
-            onScroll={onScroll}
-          />
-        );
-      }}
-    </WindowScroller>
+    <InfiniteLoader
+      isRowLoaded={isRowLoaded}
+      loadMoreRows={loadMoreRows}
+      rowCount={hasMore ? images.length + 1 : images.length}
+    >
+      {({ registerChild, onRowsRendered }) => (
+        <WindowScroller onScroll={onScroll}>
+          {({ width, height, isScrolling, scrollTop, onChildScroll }) =>
+            width > 505 ? (
+              <RenderMasonry
+                masonryRef={masonryRef}
+                images={images}
+                registerChild={registerChild}
+                onRowsRendered={onRowsRendered}
+                height={height}
+                isScrolling={isScrolling}
+                scrollTop={scrollTop}
+                onChildScroll={onChildScroll}
+              />
+            ) : (
+              <RenderList
+                images={images}
+                registerChild={registerChild}
+                onRowsRendered={onRowsRendered}
+                height={height}
+                isScrolling={isScrolling}
+                scrollTop={scrollTop}
+                onChildScroll={onChildScroll}
+              />
+            )
+          }
+        </WindowScroller>
+      )}
+    </InfiniteLoader>
   );
 }
 

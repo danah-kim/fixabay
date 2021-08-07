@@ -12,14 +12,10 @@ const Container = styled.div`
   ${tw`py-4 flex`};
 `;
 const Icon = styled.button`
-  ${tw`mr-4 border-2 border-solid border-green-500 p-2 cursor-pointer transition duration-300 ease-in-out hover:bg-green-500 rounded-full text-green-500 hover:text-white`};
-
-  svg {
-    ${tw`text-lg`};
-  }
+  ${tw`mr-4 border-2 border-solid border-green-500 p-2 cursor-pointer transition duration-300 ease-in-out hover:bg-green-500 rounded-full text-green-500 hover:text-white text-lg`};
 `;
 const Popper = styled.div<{ $visible: boolean }>`
-  ${tw`border-green-500 px-4 py-3 rounded-xl bg-green-100 shadow-lg text-green-500 font-semibold transition duration-300 ease-in-out`};
+  ${tw`px-4 py-3 rounded-xl bg-green-100 shadow-lg text-green-500 font-semibold transition duration-300 ease-in-out`};
   opacity: ${({ $visible }) => +$visible};
 `;
 
@@ -33,7 +29,6 @@ const ImageDetailMenu = memo(function ButtonMenu({ id, url, style }: ImageDetail
   const [visible, toggle] = useToggle(false);
   const [referenceRef, setReferenceRef] = useState<HTMLButtonElement | null>(null);
   const [popperRef, setPopperRef] = useState<HTMLDivElement | null>(null);
-
   const { styles, attributes } = usePopper(referenceRef, popperRef, {
     placement: 'bottom',
     modifiers: [
@@ -56,7 +51,7 @@ const ImageDetailMenu = memo(function ButtonMenu({ id, url, style }: ImageDetail
 
   return (
     <>
-      <Container style={{ ...style }}>
+      <Container style={style}>
         <Icon ref={setReferenceRef} onClick={onClickCopy}>
           <HiOutlineClipboardCopy />
         </Icon>

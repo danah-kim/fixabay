@@ -72,8 +72,6 @@ function ImageDetailModal({ isLoading, isError, data }: ImageDetailModalProps) {
   const maxWidth = width > 1260 ? 'calc((100vh - 280px) * 1.5)' : '100%';
   const hiddenMobile = width > 580 || !isMobileDevice;
 
-  console.log(width, { isMobileDevice, hiddenMobile, loaded });
-
   const closeModal = useCallback(
     (e: MouseEvent | KeyboardEvent) => {
       e.stopPropagation();

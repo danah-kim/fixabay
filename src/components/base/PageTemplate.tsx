@@ -8,7 +8,9 @@ import ReactHelmet from './ReactHelmet';
 import NotFound from 'components/error/NotFound';
 import HashLoader from 'components/common/HashLoader';
 
-const Content = styled.div``;
+const Content = styled.div`
+  padding-top: 80px;
+`;
 
 interface PageTemplateProps {
   isLoading: boolean;
