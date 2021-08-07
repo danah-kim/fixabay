@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import styled, { css } from 'styled-components/macro';
+import styled from 'styled-components/macro';
 import tw from 'twin.macro';
 import { formatNumberWithCommas } from 'lib/utils';
 import Menu from './ImageDetailMenu';

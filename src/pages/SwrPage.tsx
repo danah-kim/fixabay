@@ -8,7 +8,7 @@ import { SearchImagesParams } from 'types/api';
 import PageTemplate from 'components/base/PageTemplate';
 import ImageList from 'components/image/ImageList';
 import NotFound from 'components/error/NotFound';
-import useLocalStorage from '../lib/hooks/useLocalStorage';
+import useLocalStorage from 'lib/hooks/useLocalStorage';
 
 function SwrPage() {
   const location = useLocation();
