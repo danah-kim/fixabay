@@ -1,4 +1,5 @@
-import { memo, useCallback, MouseEvent } from 'react';
+import { memo, useCallback, MouseEvent, useState, useEffect } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useToggle } from 'react-use';
 import styled from 'styled-components/macro';
@@ -7,7 +8,9 @@ import { GoSearch } from 'react-icons/go';
 import { IoCloseCircle } from 'react-icons/io5';
 import { STORAGE_KEY } from 'constant';
 import useLocalStorage from 'lib/hooks/useLocalStorage';
+import { getLastUrlParam } from 'lib/utils';
 import { SearchFormValues } from 'types/common';
+import SearchPopper from './HeaderSearchPopper';
 
 const Container = styled.div`
   ${tw`px-2 flex-auto min-h-0 min-w-0`};
@@ -18,6 +21,7 @@ const Container = styled.div`
 `;
 const Box = tw.div`flex items-center h-12 rounded-3xl bg-gray-100 transition-colors duration-100 ease-in-out hover:bg-gray-200`;
 const Inner = tw.div`flex items-center py-0 pr-3 pl-4 h-full flex-auto min-h-0 min-w-0`;
+const SearchIcon = tw.div`pr-2 text-gray-500`;
 const InputBox = styled.div`
   ${tw`h-full flex-auto min-h-0 min-w-0`};
 
@@ -26,96 +30,127 @@ const InputBox = styled.div`
   }
 `;
 const Input = tw.input`w-full h-full border-none bg-transparent`;
+const ClearSearch = styled.div`
+  ${tw`ml-3 text-gray-700 text-2xl cursor-pointer`};
+  flex: 0 0 auto;
+`;
 
-interface HeaderSearchProps {
-  onSubmit: SubmitHandler<SearchFormValues>;
-}
-
-function HeaderSearch({ onSubmit }: HeaderSearchProps) {
-  const [focused, toggleFocuse] = useToggle(false);
-  const [value, setValue] = useLocalStorage<string[]>(STORAGE_KEY.recentKeywords);
+function HeaderSearch() {
+  const history = useHistory();
+  const location = useLocation();
+  const [focused, toggleFocused] = useToggle(false);
+  const [referenceRef, setReferenceRef] = useState<HTMLDivElement | null>(null);
+  const [visiblePopper, toggleVisible] = useToggle(false);
+  const [recentSearches, setRecentSearches, removeRecentSearches] = useLocalStorage<string[]>(
+    STORAGE_KEY.recentSearches
+  );
   const {
-    watch,
-    reset,
     register,
+    trigger,
+    watch,
+    setValue,
+    reset,
     formState: { errors },
     handleSubmit,
+    setFocus,
   } = useForm();
+  const search = getLastUrlParam(location.search, 'q');
 
-  const onClear = useCallback(
+  useEffect(() => {
+    watch('search') !== search && setValue('search', search || '');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search]);
+
+  const onFocus = useCallback(() => {
+    toggleFocused();
+    toggleVisible();
+  }, [toggleFocused, toggleVisible]);
+
+  const onBlur = useCallback(() => {
+    toggleFocused();
+    toggleVisible();
+  }, [toggleFocused, toggleVisible]);
+
+  const onClearSearch = useCallback(
     (e: MouseEvent<HTMLDivElement>) => {
       e.stopPropagation();
+      setFocus('search');
       reset();
     },
-    [reset]
+    [reset, setFocus]
+  );
+
+  const onSubmit: SubmitHandler<SearchFormValues> = useCallback(
+    async ({ search }, event) => {
+      if (!search) return;
+
+      setRecentSearches(
+        recentSearches?.length
+          ? Array.from(new Set(recentSearches.concat(search).slice(recentSearches.length > 1 ? -5 : 0)))
+          : [search]
+      );
+      history.push(`${location.pathname}?q=${search}`);
+      await trigger('search', { shouldFocus: false });
+    },
+    [history, location.pathname, recentSearches, setRecentSearches, trigger]
+  );
+
+  const onClearRecentSearches = useCallback(() => {
+    removeRecentSearches(STORAGE_KEY.recentSearches);
+    setFocus('search');
+    reset();
+  }, [removeRecentSearches, reset, setFocus]);
+
+  const onClickChip = useCallback(
+    (search: string) => () => {
+      history.push(`${location.pathname}?q=${search}`);
+    },
+    [history, location.pathname]
   );
 
   return (
-    <Container>
-      <Box>
-        <Inner>
-          {!focused && !watch('search') && <SearchBox />}
-          <InputBox>
-            <form
-              onSubmit={handleSubmit<SearchFormValues>(({ search, ...rest }) => {
-                setValue(value?.length ? value.concat(search).slice(value.length > 1 ? -4 : 0) : [search]);
-                return onSubmit({ search, ...rest });
-              })}
-              noValidate
-            >
-              <Input
-                type="search"
-                autoComplete="off"
-                autoCapitalize="none"
-                spellCheck={false}
-                placeholder="이미지 검색"
-                {...register('search', {
-                  required: '검색어를 입력해주세요.',
-                })}
-                onFocus={toggleFocuse}
-                onBlur={toggleFocuse}
-              />
-              {errors.search && <p>{errors.search.message}</p>}
-            </form>
-          </InputBox>
-          {!!watch('search') && <ClearBox onClear={onClear} />}
-        </Inner>
-      </Box>
-    </Container>
+    <>
+      <Container>
+        <Box ref={setReferenceRef}>
+          <Inner>
+            {!focused && !watch('search') && (
+              <SearchIcon>
+                <GoSearch />
+              </SearchIcon>
+            )}
+            <InputBox>
+              <form onSubmit={handleSubmit<SearchFormValues>(onSubmit)} noValidate>
+                <Input
+                  type="search"
+                  autoComplete="off"
+                  autoCapitalize="none"
+                  spellCheck={false}
+                  placeholder="이미지 검색"
+                  {...register('search')}
+                  onFocus={onFocus}
+                  onBlur={onBlur}
+                  required
+                />
+                {errors.search && <p>{errors.search.message}</p>}
+              </form>
+            </InputBox>
+            {!!watch('search') && (
+              <ClearSearch onClick={onClearSearch}>
+                <IoCloseCircle />
+              </ClearSearch>
+            )}
+          </Inner>
+        </Box>
+      </Container>
+      <SearchPopper
+        visible={visiblePopper && !watch('search') && !!recentSearches?.length}
+        referenceRef={referenceRef}
+        recentSearches={recentSearches}
+        onClearRecentSearches={onClearRecentSearches}
+        onClickChip={onClickChip}
+      />
+    </>
   );
 }
-
-const SearchIcon = styled.div`
-  ${tw`pr-2`};
-
-  svg {
-    ${tw`text-gray-500`};
-  }
-`;
-
-const SearchBox = memo(function SearchBox() {
-  return (
-    <SearchIcon>
-      <GoSearch />
-    </SearchIcon>
-  );
-});
-
-const ClearIcon = styled.div`
-  ${tw`ml-3`};
-  flex: 0 0 auto;
-
-  svg {
-    ${tw`text-gray-700 text-2xl`};
-  }
-`;
-
-const ClearBox = memo(function ClearBox({ onClear }: { onClear: (e: MouseEvent<HTMLDivElement>) => void }) {
-  return (
-    <ClearIcon onClick={onClear}>
-      <IoCloseCircle />
-    </ClearIcon>
-  );
-});
 
 export default memo(HeaderSearch);

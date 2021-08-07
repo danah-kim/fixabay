@@ -1,3 +1,4 @@
+import queryString from 'query-string';
 import { ImageType } from 'types/api';
 
 export function getImageType(pathname: string) {
@@ -75,3 +76,9 @@ export function formatNumberWithK(num: number) {
     ? calValue
     : (calValue.length > 3 ? (+calValue / 1000).toFixed(2) : calValue).replace(rx, '$1') + item.symbol;
 }
+
+export const getLastUrlParam = (search = window.location.search, key: string) => {
+  const parsed = queryString.parse(search)[key];
+
+  return Array.isArray(parsed) ? parsed[parsed.length - 1] : parsed;
+};

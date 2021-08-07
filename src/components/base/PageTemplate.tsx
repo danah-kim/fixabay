@@ -1,8 +1,7 @@
 import { PropsWithChildren } from 'react';
 import { useLocation } from 'react-router-dom';
-import { SubmitHandler } from 'react-hook-form';
 import styled from 'styled-components/macro';
-import { Menu, SearchFormValues } from 'types/common';
+import { Menu } from 'types/common';
 import Header from './Header';
 import ReactHelmet from './ReactHelmet';
 import NotFound from 'components/error/NotFound';
@@ -16,7 +15,6 @@ interface PageTemplateProps {
   isLoading: boolean;
   isError: boolean;
   menu: Menu[];
-  onSubmitSearch: SubmitHandler<SearchFormValues>;
   title: string;
   description: string;
   path: string;
@@ -27,7 +25,6 @@ function PageTemplate({
   isLoading,
   isError,
   menu,
-  onSubmitSearch,
   title,
   description,
   path,
@@ -42,7 +39,7 @@ function PageTemplate({
         canonical={path}
       />
       <div>
-        <Header homePath={path} menu={menu} onSubmitSearch={onSubmitSearch} />
+        <Header homePath={path} menu={menu} />
         {isLoading ? <HashLoader /> : isError ? <NotFound isError /> : <Content>{children}</Content>}
       </div>
     </>

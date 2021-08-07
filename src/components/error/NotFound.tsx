@@ -1,12 +1,11 @@
 import { useCallback, memo } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import tw from 'twin.macro';
 import { RiEmotionSadLine } from 'react-icons/ri';
 import { FaRegSurprise } from 'react-icons/fa';
-import { useRecoilValue } from 'recoil';
-import searchState from 'lib/recoil/search';
 import routes from 'routes';
+import { getLastUrlParam } from 'lib/utils';
 
 const Container = styled.div`
   ${tw`w-full flex flex-col justify-items-center items-center py-12 mt-14`};
@@ -28,12 +27,13 @@ interface NotFound {
 }
 
 function NotFound({ isSearch = false, isError = true }: NotFound) {
-  const search = useRecoilValue(searchState);
   const history = useHistory();
+  const location = useLocation();
+  const search = getLastUrlParam(history.location.search, 'q');
 
   const onClick = useCallback(() => {
     history.replace(routes[location.pathname.includes(routes.swr.path) ? 'swr' : 'reactQuery'].path);
-  }, [history]);
+  }, [history, location.pathname]);
 
   return (
     <Container>

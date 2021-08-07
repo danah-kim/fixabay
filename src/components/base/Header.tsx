@@ -18,16 +18,15 @@ const Container = styled.div<{ showShadow: boolean }>`
 interface HeaderProps {
   homePath: string;
   menu: MenuT[];
-  onSubmitSearch: SubmitHandler<SearchFormValues>;
 }
 
-function Header({ homePath, menu, onSubmitSearch }: HeaderProps) {
+function Header({ homePath, menu }: HeaderProps) {
   const shadowToggle = useRecoilValue(shadowToggleState);
 
   return (
     <Container showShadow={shadowToggle}>
       <Menu homePath={homePath} menu={menu} />
-      <Search onSubmit={onSubmitSearch} />
+      <Search />
       <Profile />
     </Container>
   );

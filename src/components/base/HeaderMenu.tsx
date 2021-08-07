@@ -1,9 +1,9 @@
 import { memo } from 'react';
-import { Link } from 'react-router-dom';
-import { useLocation } from 'react-use';
+import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import tw from 'twin.macro';
 import { Menu as MenuT } from 'types/common';
+import { getLastUrlParam } from 'lib/utils';
 
 const List = styled.div`
   ${tw`flex flex-row items-center`};
@@ -34,6 +34,7 @@ interface HeaderMenuProps {
 
 function HeaderMenu({ homePath, menu }: HeaderMenuProps) {
   const location = useLocation();
+  const search = getLastUrlParam(location.search, 'q') || '';
 
   return (
     <List>
@@ -41,7 +42,12 @@ function HeaderMenu({ homePath, menu }: HeaderMenuProps) {
         <Inner>Fixabay</Inner>
       </Logo>
       {menu.map(({ path, name }) => (
-        <Menu key={name} path={path} name={name} current={path !== homePath && path === location.pathname} />
+        <Menu
+          key={name}
+          path={search ? `${path}?q=${search}` : path}
+          name={name}
+          current={path !== homePath && path === location.pathname}
+        />
       ))}
     </List>
   );
