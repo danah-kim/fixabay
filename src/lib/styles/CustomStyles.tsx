@@ -99,14 +99,13 @@ const CustomStyles = createGlobalStyle`
     }
   }
   .ReactModal__Overlay {
-    position: absolute !important;
     overflow-x: auto;
   }
   .ReactModal__Content {
     transition: all 0.8s cubic-bezier(0.77, 0, 0.175, 1) 0s;
 
     @media (max-width: 755px) {
-      margin: 15% 0 0 !important;
+      margin: 15% 0 15% !important;
     }
   }
 `;

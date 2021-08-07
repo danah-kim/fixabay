@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import Modal from 'react-modal';
 import styled from 'styled-components/macro';
 import tw from 'twin.macro';
-import { useToggle, useWindowSize } from 'react-use';
+import { useToggle, useWindowSize, useLockBodyScroll } from 'react-use';
 import { CgClose } from 'react-icons/cg';
 import isMobile from 'ismobilejs';
 import { Image } from 'types/api';
@@ -70,7 +70,9 @@ function ImageDetailModal({ isLoading, isError, data }: ImageDetailModalProps) {
   const [loaded, toggle] = useToggle(false);
   const isMobileDevice = isMobile(window.navigator).phone || isMobile(window.navigator).tablet;
   const maxWidth = width > 1260 ? 'calc((100vh - 280px) * 1.5)' : '100%';
-  const hiddenMobile = width > 580 || !isMobileDevice;
+  const visibleMobile = width < 581 || isMobileDevice;
+
+  useLockBodyScroll(true);
 
   const closeModal = useCallback(
     (e: MouseEvent | KeyboardEvent) => {
@@ -102,7 +104,7 @@ function ImageDetailModal({ isLoading, isError, data }: ImageDetailModalProps) {
         </Paper>
       ) : (
         <Paper>
-          {!hiddenMobile && loaded && (
+          {visibleMobile && loaded && (
             <MobileInfoBox>
               <UserProfile
                 user={data.user}
@@ -116,7 +118,7 @@ function ImageDetailModal({ isLoading, isError, data }: ImageDetailModalProps) {
             <Img src={data.webformatURL} alt={`${data.id}`} style={{ maxWidth }} onLoad={onLoad} />
           </ImageBox>
           <Info
-            visibleMenu={hiddenMobile && loaded}
+            visibleMenu={!visibleMobile && loaded}
             maxWidth={maxWidth}
             id={data.id}
             user={data.user}
