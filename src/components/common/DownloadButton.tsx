@@ -1,4 +1,4 @@
-import { useCallback, CSSProperties } from 'react';
+import { useCallback, CSSProperties, memo } from 'react';
 import styled from 'styled-components/macro';
 import tw from 'twin.macro';
 import { TiArrowDownThick } from 'react-icons/ti';
@@ -37,4 +37,4 @@ function DownloadButton({ name, url, style, visibleText = false }: DownloadButto
   );
 }
 
-export default DownloadButton;
+export default memo(DownloadButton);

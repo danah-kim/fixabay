@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { usePopper } from 'react-popper';
 import { IoCloseCircle } from 'react-icons/io5';
 import styled from 'styled-components/macro';
@@ -32,7 +32,7 @@ interface SearchPopperProps {
   onClickChip: (search: string) => () => void;
 }
 
-const HeaderSearchPopper = function SearchPopper({
+function HeaderSearchPopper({
   visible,
   referenceRef,
   recentSearches,
@@ -40,19 +40,18 @@ const HeaderSearchPopper = function SearchPopper({
   onClickChip,
 }: SearchPopperProps) {
   const [popperRef, setPopperRef] = useState<HTMLDivElement | null>(null);
-  const { styles, attributes } = usePopper(referenceRef, popperRef, {
-    placement: 'bottom',
-    modifiers: [
-      {
-        name: 'offset',
-        enabled: true,
-      },
-    ],
+  const { styles, attributes, state } = usePopper(referenceRef, popperRef, {
+    placement: 'bottom-start',
   });
 
   return (
     <Portal>
-      <Popper $visible={visible} ref={setPopperRef} style={styles.popper} {...attributes.popper}>
+      <Popper
+        $visible={visible}
+        ref={setPopperRef}
+        style={{ ...styles.popper, width: state?.rects.reference.width }}
+        {...attributes.popper}
+      >
         <Title>
           <Label>Recent Searches</Label>
           <ClearRecentSearches onClick={onClearRecentSearches}>
@@ -69,6 +68,6 @@ const HeaderSearchPopper = function SearchPopper({
       </Popper>
     </Portal>
   );
-};
+}
 
-export default HeaderSearchPopper;
+export default memo(HeaderSearchPopper);
