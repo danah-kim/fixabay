@@ -1,0 +1,39 @@
+{
+  "files": {
+    "static/js/0.6ce5adb2.chunk.js": "/fixabay/static/js/0.6ce5adb2.chunk.js",
+    "static/js/0.6ce5adb2.chunk.js.map": "/fixabay/static/js/0.6ce5adb2.chunk.js.map",
+    "static/js/1.ada66883.chunk.js": "/fixabay/static/js/1.ada66883.chunk.js",
+    "static/js/1.ada66883.chunk.js.map": "/fixabay/static/js/1.ada66883.chunk.js.map",
+    "static/js/2.f49a2799.chunk.js": "/fixabay/static/js/2.f49a2799.chunk.js",
+    "static/js/2.f49a2799.chunk.js.map": "/fixabay/static/js/2.f49a2799.chunk.js.map",
+    "static/js/3.743526e8.chunk.js": "/fixabay/static/js/3.743526e8.chunk.js",
+    "static/js/3.743526e8.chunk.js.map": "/fixabay/static/js/3.743526e8.chunk.js.map",
+    "main.js": "/fixabay/static/js/main.214c4637.chunk.js",
+    "main.js.map": "/fixabay/static/js/main.214c4637.chunk.js.map",
+    "runtime-main.js": "/fixabay/static/js/runtime-main.dcf0b0b1.js",
+    "runtime-main.js.map": "/fixabay/static/js/runtime-main.dcf0b0b1.js.map",
+    "static/css/6.b86ba623.chunk.css": "/fixabay/static/css/6.b86ba623.chunk.css",
+    "static/js/6.e7a0a302.chunk.js": "/fixabay/static/js/6.e7a0a302.chunk.js",
+    "static/js/6.e7a0a302.chunk.js.map": "/fixabay/static/js/6.e7a0a302.chunk.js.map",
+    "static/js/7.0c13a7ea.chunk.js": "/fixabay/static/js/7.0c13a7ea.chunk.js",
+    "static/js/7.0c13a7ea.chunk.js.map": "/fixabay/static/js/7.0c13a7ea.chunk.js.map",
+    "static/js/8.53b4894f.chunk.js": "/fixabay/static/js/8.53b4894f.chunk.js",
+    "static/js/8.53b4894f.chunk.js.map": "/fixabay/static/js/8.53b4894f.chunk.js.map",
+    "static/js/9.cf5679a8.chunk.js": "/fixabay/static/js/9.cf5679a8.chunk.js",
+    "static/js/9.cf5679a8.chunk.js.map": "/fixabay/static/js/9.cf5679a8.chunk.js.map",
+    "static/js/10.065b23ab.chunk.js": "/fixabay/static/js/10.065b23ab.chunk.js",
+    "static/js/10.065b23ab.chunk.js.map": "/fixabay/static/js/10.065b23ab.chunk.js.map",
+    "static/js/11.f9e5730c.chunk.js": "/fixabay/static/js/11.f9e5730c.chunk.js",
+    "static/js/11.f9e5730c.chunk.js.map": "/fixabay/static/js/11.f9e5730c.chunk.js.map",
+    "index.html": "/fixabay/index.html",
+    "static/css/6.b86ba623.chunk.css.map": "/fixabay/static/css/6.b86ba623.chunk.css.map",
+    "static/js/2.f49a2799.chunk.js.LICENSE.txt": "/fixabay/static/js/2.f49a2799.chunk.js.LICENSE.txt",
+    "static/js/6.e7a0a302.chunk.js.LICENSE.txt": "/fixabay/static/js/6.e7a0a302.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.dcf0b0b1.js",
+    "static/css/6.b86ba623.chunk.css",
+    "static/js/6.e7a0a302.chunk.js",
+    "static/js/main.214c4637.chunk.js"
+  ]
+}
