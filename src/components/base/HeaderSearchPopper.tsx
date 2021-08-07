@@ -4,6 +4,7 @@ import { IoCloseCircle } from 'react-icons/io5';
 import styled from 'styled-components/macro';
 import tw from 'twin.macro';
 import Portal from 'components/common/Portal';
+import { FormattedHtmlMessage } from 'components/common/FormattedMessage';
 
 const Popper = styled.div<{ $visible: boolean }>`
   ${tw` px-4 pt-3 pb-6 rounded-xl bg-white z-10`};
@@ -53,7 +54,9 @@ function HeaderSearchPopper({
         {...attributes.popper}
       >
         <Title>
-          <Label>Recent Searches</Label>
+          <Label>
+            <FormattedHtmlMessage message="search.recentSearches" />
+          </Label>
           <ClearRecentSearches onClick={onClearRecentSearches}>
             <IoCloseCircle />
           </ClearRecentSearches>

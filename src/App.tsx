@@ -82,7 +82,7 @@ function SwrApp({ background }: AppProps) {
       >
         <Switch location={background}>
           {Object.entries(swrRoutes)
-            .filter(([_, { isPage }]) => isPage)
+            .filter(([, { isPage }]) => isPage)
             .map(([key, { path, component }]) => (
               <Route key={key} path={path} component={component} />
             ))}
@@ -92,7 +92,7 @@ function SwrApp({ background }: AppProps) {
         </Switch>
         {background &&
           Object.entries(swrRoutes)
-            .filter(([_, { isPage }]) => !isPage)
+            .filter(([, { isPage }]) => !isPage)
             .map(([key, { path, component: Component }]) => (
               <Route key={key} path={path}>
                 <Component />
@@ -111,7 +111,7 @@ function ReactQueryApp({ background }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <Switch location={background}>
         {Object.entries(reactQueryRoutes)
-          .filter(([_, { isPage }]) => isPage)
+          .filter(([, { isPage }]) => isPage)
           .map(([key, { path, component }]) => (
             <Route key={key} path={path} component={component} />
           ))}
@@ -121,7 +121,7 @@ function ReactQueryApp({ background }: AppProps) {
       </Switch>
       {background &&
         Object.entries(reactQueryRoutes)
-          .filter(([_, { isPage }]) => !isPage)
+          .filter(([, { isPage }]) => !isPage)
           .map(([key, { path, component: Component }]) => (
             <Route key={key} path={path}>
               <Component />

@@ -3,6 +3,7 @@ import styled from 'styled-components/macro';
 import tw from 'twin.macro';
 import { TiArrowDownThick } from 'react-icons/ti';
 import { downloadImage } from 'lib/utils';
+import { FormattedHtmlMessage } from './FormattedMessage';
 
 const Button = styled.div<{ $visibleText: boolean }>`
   ${tw`bg-green-500 p-1.5 cursor-pointer transition duration-300 ease-in-out hover:bg-green-600 pointer-events-auto`};
@@ -12,7 +13,10 @@ const Button = styled.div<{ $visibleText: boolean }>`
     ${tw`text-white text-lg`};
   }
 `;
-const Text = tw.p`text-white text-sm font-semibold px-2.5 py-1`;
+const Text = styled.p`
+  ${tw`text-white text-sm font-semibold px-2.5 py-1`};
+  word-break: keep-all;
+`;
 
 interface DownloadButtonProps {
   name: string;
@@ -32,7 +36,13 @@ function DownloadButton({ name, url, style, visibleText = false }: DownloadButto
 
   return (
     <Button style={style} onClick={onClickDownload} $visibleText={visibleText}>
-      {visibleText ? <Text>Download</Text> : <TiArrowDownThick />}
+      {visibleText ? (
+        <Text>
+          <FormattedHtmlMessage message="detail.download" />
+        </Text>
+      ) : (
+        <TiArrowDownThick />
+      )}
     </Button>
   );
 }

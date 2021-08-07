@@ -1,0 +1,28 @@
+{
+  "imageType": {
+    "photos": "Photos",
+    "illustrations": "Illustrations",
+    "vectors" : "Vectors"
+  },
+  "search":{
+    "placeholder": "Search",
+    "recentSearches": "Recent Searches"
+  },
+  "statistic": {
+    "views": "Views",
+    "likes": "Likes",
+    "downloads": "Downloads"
+  },
+  "detail": {
+    "copied": "copied!",
+    "download": "Download"
+  },
+  "error": {
+    "noResult": "We couldn't find any picture for <p class='highLight'>'{{search}}'</p>.",
+    "backToHome": "Something wrong here... \\n Head back to Home.",
+    "noPage": "We can't find the page you're looking for."
+  },
+  "button": {
+    "home": "Home"
+  }
+}

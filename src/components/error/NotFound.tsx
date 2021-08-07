@@ -6,6 +6,7 @@ import { RiEmotionSadLine } from 'react-icons/ri';
 import { FaRegSurprise } from 'react-icons/fa';
 import routes from 'routes';
 import { getLastUrlParam } from 'lib/utils';
+import { FormattedHtmlMessage } from 'components/common/FormattedMessage';
 
 const Container = styled.div`
   ${tw`w-full flex flex-col justify-items-center items-center py-12 mt-14`};
@@ -18,7 +19,6 @@ const Icon = styled.div`
   }
 `;
 const Text = tw.p`text-2xl font-semibold px-8 text-center`;
-const Highlight = tw.span`text-green-500`;
 const Button = tw.button`bg-green-500 text-white py-2 px-4 mt-8 text-base rounded-xl hover:bg-green-700 font-semibold`;
 
 interface NotFound {
@@ -29,7 +29,7 @@ interface NotFound {
 function NotFound({ isSearch = false, isError = true }: NotFound) {
   const history = useHistory();
   const location = useLocation();
-  const search = getLastUrlParam(history.location.search, 'q');
+  const search = getLastUrlParam(history.location.search, 'q') || '';
 
   const onClick = useCallback(() => {
     history.replace(routes[location.pathname.includes(routes.swr.path) ? 'swr' : 'reactQuery'].path);
@@ -40,17 +40,18 @@ function NotFound({ isSearch = false, isError = true }: NotFound) {
       <Icon>{isError ? <FaRegSurprise /> : <RiEmotionSadLine />}</Icon>
       <Text>
         {isSearch ? (
-          <>
-            {"We couldn't find any Picture for "}
-            <Highlight>{`'${search}' `}</Highlight>.
-          </>
+          <FormattedHtmlMessage message="error.noResult" params={{ search }} isHtml />
         ) : isError ? (
-          'Something wrong here... Head back to Home'
+          <FormattedHtmlMessage message="error.backToHome" isHtml />
         ) : (
-          "We can't find the page you're looking for"
+          <FormattedHtmlMessage message="error.noPage" />
         )}
       </Text>
-      {!isSearch && <Button onClick={onClick}>Home</Button>}
+      {!isSearch && (
+        <Button onClick={onClick}>
+          <FormattedHtmlMessage message="button.home" />
+        </Button>
+      )}
     </Container>
   );
 }

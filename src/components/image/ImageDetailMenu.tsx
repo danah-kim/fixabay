@@ -7,6 +7,7 @@ import { useToggle } from 'react-use';
 import { copyTextToClipboard } from 'lib/utils';
 import DownloadButton from 'components/common/DownloadButton';
 import Portal from 'components/common/Portal';
+import { FormattedHtmlMessage } from 'components/common/FormattedMessage';
 
 const Container = styled.div`
   ${tw`py-4 flex`};
@@ -59,7 +60,7 @@ const ImageDetailMenu = memo(function ButtonMenu({ id, url, style }: ImageDetail
       </Container>
       <Portal>
         <Popper $visible={visible} ref={setPopperRef} style={styles.popper} {...attributes.popper}>
-          copied!
+          <FormattedHtmlMessage message="detail.copied" />
         </Popper>
       </Portal>
     </>

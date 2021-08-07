@@ -108,6 +108,9 @@ const CustomStyles = createGlobalStyle`
       margin: 15% 0 15% !important;
     }
   }
+  .highLight {
+    ${tw`text-green-500`};
+  }
 `;
 
 export default CustomStyles;

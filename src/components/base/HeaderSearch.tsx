@@ -6,6 +6,7 @@ import styled from 'styled-components/macro';
 import tw from 'twin.macro';
 import { GoSearch } from 'react-icons/go';
 import { IoCloseCircle } from 'react-icons/io5';
+import { useTranslation } from 'react-i18next';
 import { STORAGE_KEY } from 'constant';
 import useLocalStorage from 'lib/hooks/useLocalStorage';
 import { getLastUrlParam } from 'lib/utils';
@@ -55,6 +56,7 @@ function HeaderSearch() {
     setFocus,
   } = useForm();
   const search = getLastUrlParam(location.search, 'q');
+  const { t } = useTranslation();
 
   useEffect(() => {
     watch('search') !== search && setValue('search', search || '');
@@ -81,7 +83,7 @@ function HeaderSearch() {
   );
 
   const onSubmit: SubmitHandler<SearchFormValues> = useCallback(
-    async ({ search }, event) => {
+    async ({ search }) => {
       if (!search) return;
 
       setRecentSearches(
@@ -125,7 +127,7 @@ function HeaderSearch() {
                   autoComplete="off"
                   autoCapitalize="none"
                   spellCheck={false}
-                  placeholder="이미지 검색"
+                  placeholder={t('search.placeholder')}
                   {...register('search')}
                   onFocus={onFocus}
                   onBlur={onBlur}

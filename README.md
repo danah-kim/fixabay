@@ -10,6 +10,7 @@ Pixabay API를 이용하여 만든 무료 이미지 검색 사이트
 - tailwindcss
 - styled-components
 - recoil
+- i18next
 
 ## 참고
 

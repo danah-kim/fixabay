@@ -7,6 +7,10 @@ import CustomStyles from 'lib/styles/CustomStyles';
 import reportWebVitals from './reportWebVitals';
 import 'react-virtualized/styles.css';
 import 'tailwindcss/tailwind.css';
+import supportLanguages from 'lib/languages';
+import i18n from 'lib/i18n';
+
+i18n.changeLanguage(localStorage.getItem('i18nextLng') || supportLanguages.getLocale(window.navigator.language));
 
 ReactDOM.render(
   <>

@@ -4,6 +4,7 @@ import styled from 'styled-components/macro';
 import tw from 'twin.macro';
 import { Menu as MenuT } from 'types/common';
 import { getLastUrlParam } from 'lib/utils';
+import { FormattedHtmlMessage } from 'components/common/FormattedMessage';
 
 const List = styled.div`
   ${tw`flex flex-row items-center`};
@@ -25,7 +26,10 @@ const Item = styled(MenuBase)<{ $current: boolean }>`
     display: none;
   }
 `;
-const Inner = tw.div`h-full flex items-center`;
+const Inner = styled.div`
+  ${tw`h-full flex items-center`};
+  word-break: keep-all;
+`;
 
 interface HeaderMenuProps {
   homePath: string;
@@ -56,7 +60,9 @@ function HeaderMenu({ homePath, menu }: HeaderMenuProps) {
 const Menu = memo(function Menu({ path, name, current }: { path: string; name: string; current: boolean }) {
   return (
     <Item to={path} $current={current}>
-      <Inner>{name}</Inner>
+      <Inner>
+        <FormattedHtmlMessage message={`imageType.${name}`} />
+      </Inner>
     </Item>
   );
 });

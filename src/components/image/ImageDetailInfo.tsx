@@ -4,6 +4,7 @@ import tw from 'twin.macro';
 import { formatNumberWithCommas } from 'lib/utils';
 import Menu from './ImageDetailMenu';
 import UserProfile from 'components/common/UserProfile';
+import { FormattedHtmlMessage } from 'components/common/FormattedMessage';
 
 const Container = styled.div`
   ${tw`flex items-center px-8 pt-4 pb-8 mx-auto grid gap-4`};
@@ -70,15 +71,21 @@ function ImageDetailInfo({
       </User>
       <Statistics>
         <Statistic>
-          <Label>Likes</Label>
+          <Label>
+            <FormattedHtmlMessage message="statistic.likes" />
+          </Label>
           {formatNumberWithCommas(likes)}
         </Statistic>
         <Statistic>
-          <Label>Views</Label>
+          <Label>
+            <FormattedHtmlMessage message="statistic.views" />
+          </Label>
           {formatNumberWithCommas(views)}
         </Statistic>
         <Downloads>
-          <Label>Downloads</Label>
+          <Label>
+            <FormattedHtmlMessage message="statistic.downloads" />
+          </Label>
           {formatNumberWithCommas(downloads)}
         </Downloads>
       </Statistics>

@@ -1,6 +1,6 @@
 import { memo, useCallback } from 'react';
 import { AutoSizer, CellMeasurer, CellMeasurerCache, List, ListRowProps, IndexRange } from 'react-virtualized';
-import ImageMeasurer, { ImageMeasurerProperties, Size } from 'react-virtualized-image-measurer';
+import ImageMeasurer, { ImageMeasurerProperties } from 'react-virtualized-image-measurer';
 import { CARD } from 'constant';
 import { Image } from 'types/api';
 import ImageCard from './ImageCard';
@@ -31,12 +31,9 @@ function ImageRenderList({
     fixedWidth: true,
   });
 
-  const onResize = useCallback(
-    ({ width }: Size) => {
-      cellMeasurerCache.clearAll();
-    },
-    [cellMeasurerCache]
-  );
+  const onResize = useCallback(() => {
+    cellMeasurerCache.clearAll();
+  }, [cellMeasurerCache]);
 
   const rowRenderer = useCallback(
     (itemsWithSizes: ImageMeasurerProperties['itemsWithSizes']) =>
