@@ -1,4 +1,4 @@
-import { memo, useCallback, useRef } from 'react';
+import { memo, useCallback, useState, useEffect, useRef } from 'react';
 import { Index, Masonry, WindowScroller, InfiniteLoader, WindowScrollerProps } from 'react-virtualized';
 import { useRecoilState } from 'recoil';
 import isMobile from 'ismobilejs';
@@ -16,7 +16,19 @@ interface ImageListProps {
 function ImageList({ images, hasMore, fetchMoreData }: ImageListProps) {
   const [shadowToggle, setShadowToggle] = useRecoilState(shadowToggleState);
   const masonryRef = useRef<Masonry | null>(null);
-  const isMobileDevice = isMobile(window.navigator).phone || isMobile(window.navigator).tablet;
+  const platform = isMobile(window.navigator);
+  const [isMobileDevice, toggle] = useState(platform.phone || platform.tablet);
+
+  useEffect(() => {
+    let mobileDevice = platform.phone || platform.tablet;
+
+    isMobileDevice !== mobileDevice &&
+      toggle((prev) => {
+        prev === true && mobileDevice === false && window.location.reload();
+
+        return !isMobileDevice;
+      });
+  }, [isMobileDevice, platform]);
 
   const isRowLoaded = useCallback(({ index }: Index) => !!images[index], [images]);
 
