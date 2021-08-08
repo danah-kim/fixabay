@@ -9,14 +9,12 @@ import isMobile from 'ismobilejs';
 import { Image } from 'types/api';
 import NotFound from 'components/error/NotFound';
 import UserProfile from 'components/common/UserProfile';
-import HashLoader from 'components/common/HashLoader';
 import Info from './ImageDetailInfo';
 import Menu from './ImageDetailMenu';
 
 Modal.setAppElement('#portal');
 
 const Icon = tw.button`absolute top-0 left-0 p-3 text-2xl text-white text-opacity-80 hover:text-opacity-100 transition duration-150 ease-in-out pointer-events-none`;
-
 const Paper = styled.div`
   ${tw`bg-white rounded-3xl shadow-xl min-w-0 m-auto`};
 
@@ -72,7 +70,7 @@ function ImageDetailModal({ isLoading, isError, data }: ImageDetailModalProps) {
   const maxWidth = width > 1260 ? 'calc((100vh - 280px) * 1.5)' : '100%';
   const visibleMobile = width < 581 || isMobileDevice;
 
-  useLockBodyScroll(true);
+  useLockBodyScroll(!isMobileDevice);
 
   const closeModal = useCallback(
     (e: MouseEvent | KeyboardEvent) => {
@@ -96,42 +94,71 @@ function ImageDetailModal({ isLoading, isError, data }: ImageDetailModalProps) {
       <Icon>
         <CgClose />
       </Icon>
-      {isLoading ? (
-        <HashLoader />
-      ) : isError || !data ? (
-        <Paper>
+      <Paper>
+        {isLoading ? (
+          <Loading />
+        ) : isError || !data ? (
           <NotFound isError={isError} />
-        </Paper>
-      ) : (
-        <Paper>
-          {visibleMobile && loaded && (
-            <MobileInfoBox>
-              <UserProfile
+        ) : (
+          <>
+            {visibleMobile && loaded && (
+              <MobileInfoBox>
+                <UserProfile
+                  user={data.user}
+                  userImageURL={data.userImageURL}
+                  style={{ padding: '12px 16px 0 0', fontWeight: 700 }}
+                />
+                <Menu id={data.id} url={data.largeImageURL || data.webformatURL} style={{ padding: '12px 0 0' }} />
+              </MobileInfoBox>
+            )}
+            <ImageBox>
+              <Img src={data.webformatURL} alt={`${data.id}`} style={{ maxWidth }} onLoad={onLoad} />
+            </ImageBox>
+            {loaded && (
+              <Info
+                visibleMenu={!visibleMobile}
+                maxWidth={maxWidth}
+                id={data.id}
                 user={data.user}
                 userImageURL={data.userImageURL}
-                style={{ padding: '12px 16px 0 0', fontWeight: 700 }}
+                likes={data.likes}
+                views={data.views}
+                downloads={data.downloads}
+                url={data.largeImageURL || data.webformatURL}
               />
-              <Menu id={data.id} url={data.largeImageURL || data.webformatURL} style={{ padding: '12px 0 0' }} />
-            </MobileInfoBox>
-          )}
-          <ImageBox>
-            <Img src={data.webformatURL} alt={`${data.id}`} style={{ maxWidth }} onLoad={onLoad} />
-          </ImageBox>
-          <Info
-            visibleMenu={!visibleMobile && loaded}
-            maxWidth={maxWidth}
-            id={data.id}
-            user={data.user}
-            userImageURL={data.userImageURL}
-            likes={data.likes}
-            views={data.views}
-            downloads={data.downloads}
-            url={data.largeImageURL || data.webformatURL}
-          />
-        </Paper>
-      )}
+            )}
+          </>
+        )}
+      </Paper>
     </Modal>
   );
 }
+
+const LoadingBox = styled.div`
+  padding: 32px;
+`;
+const Title = styled.div`
+  ${tw`bg-gray-200 h-60 rounded animate-pulse`}
+
+  @media (max-width: 581px) {
+    height: 56px;
+  }
+`;
+const Contents = styled.div`
+  ${tw`h-14 bg-gray-200 rounded animate-pulse mt-6`}
+
+  @media (max-width: 581px) {
+    height: 240px;
+  }
+`;
+
+const Loading = memo(function Loading() {
+  return (
+    <LoadingBox>
+      <Title />
+      <Contents />
+    </LoadingBox>
+  );
+});
 
 export default memo(ImageDetailModal);

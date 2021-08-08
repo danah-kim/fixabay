@@ -1,14 +1,19 @@
 import { memo } from 'react';
-import styled from 'styled-components/macro';
+import styled, { css } from 'styled-components/macro';
 import tw from 'twin.macro';
 import { formatNumberWithCommas } from 'lib/utils';
 import Menu from './ImageDetailMenu';
 import UserProfile from 'components/common/UserProfile';
 import { FormattedHtmlMessage } from 'components/common/FormattedMessage';
 
-const Container = styled.div`
-  ${tw`flex items-center px-8 pt-4 pb-8 mx-auto grid gap-4`};
-  grid-template-columns: repeat(1, 1fr 3fr 1fr);
+const Container = styled.div<{ $visibleMenu: boolean }>`
+  ${tw`items-center px-8 pt-4 pb-8 mx-auto grid gap-4`};
+
+  ${({ $visibleMenu }) =>
+    $visibleMenu &&
+    css`
+      grid-template-columns: repeat(1, 1fr 3fr 1fr);
+    `}
 
   @media (max-width: 755px) {
     padding: 12px 16px;
@@ -23,7 +28,7 @@ const User = styled.div`
   }
 `;
 const Statistics = styled.div`
-  ${tw`box-border flex grid gap-4`};
+  ${tw`box-border grid gap-4`};
   grid-template-columns: repeat(3, minmax(min-content, 120px));
 
   @media (max-width: 1007px) {
@@ -65,7 +70,7 @@ function ImageDetailInfo({
   url,
 }: ImageDetailInfoProps) {
   return (
-    <Container style={{ maxWidth }}>
+    <Container $visibleMenu={visibleMenu} style={{ maxWidth }}>
       <User>
         <UserProfile user={user} userImageURL={userImageURL} style={{ padding: 0, fontWeight: 700 }} />
       </User>

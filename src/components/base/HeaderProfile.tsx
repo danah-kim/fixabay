@@ -48,10 +48,10 @@ function HeaderProfile() {
   });
   const onClickLang = useCallback(
     (langCode: Language['langCode']) => () => {
-      console.log('?', langCode);
       i18n.changeLanguage(langCode);
+      toggle();
     },
-    []
+    [toggle]
   );
 
   return (

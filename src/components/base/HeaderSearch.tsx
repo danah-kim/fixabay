@@ -47,7 +47,6 @@ function HeaderSearch() {
   );
   const {
     register,
-    trigger,
     watch,
     setValue,
     reset,
@@ -92,9 +91,9 @@ function HeaderSearch() {
           : [search]
       );
       history.push(`${location.pathname}?q=${search}`);
-      await trigger('search', { shouldFocus: false });
+      (document.activeElement as HTMLElement).blur();
     },
-    [history, location.pathname, recentSearches, setRecentSearches, trigger]
+    [history, location.pathname, recentSearches, setRecentSearches]
   );
 
   const onClearRecentSearches = useCallback(() => {

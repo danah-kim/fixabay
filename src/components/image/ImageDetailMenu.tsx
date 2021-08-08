@@ -10,7 +10,11 @@ import Portal from 'components/common/Portal';
 import { FormattedHtmlMessage } from 'components/common/FormattedMessage';
 
 const Container = styled.div`
-  ${tw`py-4 flex`};
+  ${tw`flex`};
+
+  @media (max-width: 755px) {
+    padding: 0 16px;
+  }
 `;
 const Icon = styled.button`
   ${tw`mr-4 border-2 border-solid border-green-500 p-2 cursor-pointer transition duration-300 ease-in-out hover:bg-green-500 rounded-full text-green-500 hover:text-white text-lg`};
