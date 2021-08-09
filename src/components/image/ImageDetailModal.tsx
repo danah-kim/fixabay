@@ -68,7 +68,7 @@ function ImageDetailModal({ isLoading, isError, data }: ImageDetailModalProps) {
   const [loaded, toggle] = useToggle(false);
   const isMobileDevice = isMobile(window.navigator).phone || isMobile(window.navigator).tablet;
   const maxWidth = width > 1260 ? 'calc((100vh - 280px) * 1.5)' : '100%';
-  const visibleMobile = width < 581 || isMobileDevice;
+  const visibleMobile = width < 581 && isMobileDevice;
 
   useLockBodyScroll(!isMobileDevice);
 
@@ -94,7 +94,7 @@ function ImageDetailModal({ isLoading, isError, data }: ImageDetailModalProps) {
       <Icon>
         <CgClose />
       </Icon>
-      <Paper>
+      <Paper style={{ maxWidth }}>
         {isLoading ? (
           <Loading />
         ) : isError || !data ? (
@@ -112,7 +112,7 @@ function ImageDetailModal({ isLoading, isError, data }: ImageDetailModalProps) {
               </MobileInfoBox>
             )}
             <ImageBox>
-              <Img src={data.webformatURL} alt={`${data.id}`} style={{ maxWidth }} onLoad={onLoad} />
+              <Img src={data.webformatURL} alt={`${data.id}`} onLoad={onLoad} />
             </ImageBox>
             {loaded && (
               <Info
