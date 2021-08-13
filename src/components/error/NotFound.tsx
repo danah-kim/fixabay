@@ -1,16 +1,13 @@
 import { useCallback, memo } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import styled from 'styled-components/macro';
-import tw from 'twin.macro';
+import tw, { styled } from 'twin.macro';
 import { RiEmotionSadLine } from 'react-icons/ri';
 import { FaRegSurprise } from 'react-icons/fa';
 import routes from 'routes';
 import { getLastUrlParam } from 'lib/utils';
 import { FormattedHtmlMessage } from 'components/common/FormattedMessage';
 
-const Container = styled.div`
-  ${tw`w-full flex flex-col justify-items-center items-center py-12 mt-14`};
-`;
+const Container = tw.div`w-full flex flex-col justify-items-center items-center py-12 mt-14`;
 const Icon = styled.div`
   ${tw`w-28 h-28 rounded-full mx-auto mb-6`};
 

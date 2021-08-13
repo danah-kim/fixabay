@@ -1,8 +1,7 @@
 import { KeyboardEvent, memo, MouseEvent, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import Modal from 'react-modal';
-import styled from 'styled-components/macro';
-import tw from 'twin.macro';
+import tw, { styled } from 'twin.macro';
 import { useToggle, useWindowSize, useLockBodyScroll } from 'react-use';
 import { CgClose } from 'react-icons/cg';
 import isMobile from 'ismobilejs';
@@ -14,7 +13,7 @@ import Menu from './ImageDetailMenu';
 
 Modal.setAppElement('#portal');
 
-const Icon = tw.button`absolute top-0 left-0 p-3 text-2xl text-white text-opacity-80 hover:text-opacity-100 transition duration-150 ease-in-out pointer-events-none`;
+const Icon = tw.button`absolute top-0 left-0 p-3 text-2xl text-white text-opacity-80 hover:text-opacity-100 transition duration-150 ease-in-out pointer-events-none border-0`;
 const Paper = styled.div`
   ${tw`bg-white rounded-3xl shadow-xl min-w-0 m-auto`};
 
@@ -22,9 +21,7 @@ const Paper = styled.div`
     border-radius: 24px;
   }
 `;
-const MobileInfoBox = styled.div`
-  ${tw`px-6 pt-2 pb-4 flex items-center justify-between flex-wrap`};
-`;
+const MobileInfoBox = tw.div`px-6 pt-2 pb-4 flex items-center justify-between flex-wrap`;
 const ImageBox = styled.div`
   padding: 32px 32px 16px;
 
@@ -134,9 +131,7 @@ function ImageDetailModal({ isLoading, isError, data }: ImageDetailModalProps) {
   );
 }
 
-const LoadingBox = styled.div`
-  padding: 32px;
-`;
+const LoadingBox = tw.div`p-8`;
 const Title = styled.div`
   ${tw`bg-gray-200 h-60 rounded animate-pulse`}
 

@@ -13,7 +13,7 @@ import ImageMeasurer, { ImageMeasurerProperties } from 'react-virtualized-image-
 import { CARD } from 'constant';
 import { Image } from 'types/api';
 import ImageCard from './ImageCard';
-import styled from 'styled-components/macro';
+import { styled } from 'twin.macro';
 
 const ImageCardConainer = styled.div`
   @media (max-width: 505px) {

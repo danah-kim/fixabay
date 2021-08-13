@@ -1,12 +1,11 @@
 import { useCallback, CSSProperties, memo } from 'react';
-import styled from 'styled-components/macro';
-import tw from 'twin.macro';
+import tw, { styled } from 'twin.macro';
 import { TiArrowDownThick } from 'react-icons/ti';
 import { downloadImage } from 'lib/utils';
 import { FormattedHtmlMessage } from './FormattedMessage';
 
 const Button = styled.div<{ $visibleText: boolean }>`
-  ${tw`bg-green-500 p-1.5 cursor-pointer transition duration-300 ease-in-out hover:bg-green-600 pointer-events-auto`};
+  ${tw`bg-green-500 p-1.5 cursor-pointer transition duration-300 ease-in-out hover:bg-green-600 pointer-events-auto flex items-center`};
   ${({ $visibleText }) => ($visibleText ? tw`rounded-3xl` : tw`rounded-full`)};
 
   svg {

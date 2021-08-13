@@ -1,6 +1,5 @@
 import { CSSProperties, memo, useCallback, useState } from 'react';
-import styled from 'styled-components/macro';
-import tw from 'twin.macro';
+import tw, { styled } from 'twin.macro';
 import { usePopper } from 'react-popper';
 import { HiOutlineClipboardCopy } from 'react-icons/hi';
 import { useToggle } from 'react-use';
@@ -16,9 +15,7 @@ const Container = styled.div`
     padding: 0 16px;
   }
 `;
-const Icon = styled.button`
-  ${tw`mr-4 border-2 border-solid border-green-500 p-2 cursor-pointer transition duration-300 ease-in-out hover:bg-green-500 rounded-full text-green-500 hover:text-white text-lg`};
-`;
+const Icon = tw.button`mr-4 border-2 border-solid border-green-500 p-2 cursor-pointer transition duration-300 ease-in-out hover:bg-green-500 rounded-full text-green-500 hover:text-white text-lg flex`;
 const Popper = styled.div<{ $visible: boolean }>`
   ${tw`px-4 py-3 rounded-xl bg-green-100 shadow-lg text-green-500 font-semibold transition duration-300 ease-in-out z-30`};
   opacity: ${({ $visible }) => +$visible};

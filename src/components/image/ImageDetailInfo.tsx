@@ -1,6 +1,6 @@
 import { memo } from 'react';
-import styled, { css } from 'styled-components/macro';
-import tw from 'twin.macro';
+import { css } from 'styled-components/macro';
+import tw, { styled } from 'twin.macro';
 import { formatNumberWithCommas } from 'lib/utils';
 import Menu from './ImageDetailMenu';
 import UserProfile from 'components/common/UserProfile';
@@ -36,9 +36,7 @@ const Statistics = styled.div`
     grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
   }
 `;
-const Statistic = styled.div`
-  ${tw`flex flex-col box-border text-xs text-gray-800 font-semibold`};
-`;
+const Statistic = tw.div`flex flex-col box-border text-xs text-gray-800 font-semibold`;
 const Downloads = styled(Statistic)`
   @media (max-width: 1007px) {
     display: none;

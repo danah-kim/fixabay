@@ -4,7 +4,21 @@ import tw from 'twin.macro';
 
 const CustomStyles = createGlobalStyle`
   ${normalize}
-  
+  * {
+    ::-webkit-scrollbar {
+      display:none;
+    }
+    ::-webkit-scrollbar-track {
+      display:none;
+    }
+    ::-webkit-scrollbar-thumb {
+      display:none;
+    }
+    :focus {
+      outline: none !important;
+      box-shadow: none;
+    }
+  }
   body {
     ${tw`antialiased`};
   }
@@ -24,10 +38,7 @@ const CustomStyles = createGlobalStyle`
   input::-webkit-search-results-decoration{
     display: none;
   }
-
-  :focus {
-    outline: none !important;
-  }
+  
   .ReactVirtualized__Masonry__innerScrollContainer {
     margin-left: auto;
     margin-right: auto;

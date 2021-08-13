@@ -1,15 +1,13 @@
 import { PropsWithChildren } from 'react';
 import { useLocation } from 'react-router-dom';
-import styled from 'styled-components/macro';
+import tw from 'twin.macro';
 import { Menu } from 'types/common';
 import Header from './Header';
 import ReactHelmet from './ReactHelmet';
 import NotFound from 'components/error/NotFound';
 import HashLoader from 'components/common/HashLoader';
 
-const Content = styled.div`
-  padding-top: 80px;
-`;
+const Content = tw.div`pt-20`;
 
 interface PageTemplateProps {
   isLoading: boolean;

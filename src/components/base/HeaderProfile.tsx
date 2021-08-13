@@ -1,15 +1,12 @@
 import { memo, useCallback, useState } from 'react';
-import styled from 'styled-components/macro';
-import tw from 'twin.macro';
+import tw, { styled } from 'twin.macro';
 import { HiOutlineGlobe } from 'react-icons/hi';
 import { usePopper } from 'react-popper';
 import { useToggle } from 'react-use';
 import supportLanguages, { Language } from 'lib/languages';
 import i18n from 'lib/i18n';
 
-const Container = styled.div`
-  ${tw`w-12 h-12`};
-`;
+const Container = tw.div`w-12 h-12`;
 const Box = tw.div`w-full h-full flex items-center justify-items-center`;
 const LangIcon = styled.div`
   ${tw`rounded-full cursor-pointer p-2.5 text-xl text-green-500 w-full h-full hover:bg-gray-100 transition duration-300 ease-in-out`};
@@ -26,9 +23,7 @@ const Popper = styled.div<{ $visible: boolean }>`
   box-shadow: 0 10px 70px rgb(0 0 0 / 15%);
   transition: visibility 200ms linear, opacity 150ms linear;
 `;
-const Lang = styled.div`
-  ${tw`text-gray-800 font-semibold hover:bg-green-500 hover:bg-opacity-10 hover:text-green-500 px-5 py-3 text-center rounded-xl transition duration-300 ease-in-out cursor-pointer`};
-`;
+const Lang = tw.div`text-gray-800 font-semibold hover:bg-green-500 hover:bg-opacity-10 hover:text-green-500 px-5 py-3 text-center rounded-xl transition duration-300 ease-in-out cursor-pointer`;
 
 function HeaderProfile() {
   const [visible, toggle] = useToggle(false);

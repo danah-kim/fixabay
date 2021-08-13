@@ -1,6 +1,5 @@
 import { memo } from 'react';
-import styled from 'styled-components/macro';
-import tw from 'twin.macro';
+import tw, { styled } from 'twin.macro';
 import { useRecoilValue } from 'recoil';
 import shadowToggleState from 'lib/recoil/shadowToggle';
 import { Menu as MenuT } from 'types/common';

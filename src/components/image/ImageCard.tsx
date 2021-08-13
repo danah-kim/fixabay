@@ -1,8 +1,7 @@
 import { memo, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useToggle } from 'react-use';
-import styled from 'styled-components/macro';
-import tw from 'twin.macro';
+import tw, { styled } from 'twin.macro';
 import routes from 'routes';
 import { Image as ImageT } from 'types/api';
 import Info from './ImageCardInfo';

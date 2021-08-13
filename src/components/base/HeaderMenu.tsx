@@ -1,14 +1,11 @@
 import { memo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import styled from 'styled-components/macro';
-import tw from 'twin.macro';
+import tw, { styled } from 'twin.macro';
 import { Menu as MenuT } from 'types/common';
 import { getLastUrlParam } from 'lib/utils';
 import { FormattedHtmlMessage } from 'components/common/FormattedMessage';
 
-const List = styled.div`
-  ${tw`flex flex-row items-center`};
-`;
+const List = tw.div`flex flex-row items-center`;
 const MenuBase = tw(Link)`h-12 px-2 whitespace-nowrap font-semibold`;
 const Logo = tw(MenuBase)`mr-2 text-gray-800`;
 const Item = styled(MenuBase)<{ $current: boolean }>`

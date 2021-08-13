@@ -1,6 +1,5 @@
 import { memo } from 'react';
-import styled from 'styled-components/macro';
-import tw from 'twin.macro';
+import tw, { styled } from 'twin.macro';
 import { TiHeart, TiEye } from 'react-icons/ti';
 import isMobile from 'ismobilejs';
 import { IoMdCloudDownload } from 'react-icons/io/';
@@ -13,9 +12,7 @@ const Container = styled.div<{ $visibleInfo: boolean }>`
   ${tw`box-border transition-opacity duration-150 ease-in-out pointer-events-none`};
   opacity: ${({ $visibleInfo }) => +$visibleInfo};
 `;
-const Drop = styled(Base)`
-  ${tw`bg-gradient-to-b from-transparent via-transparent to-black opacity-60`};
-`;
+const Drop = tw(Base)`bg-gradient-to-b from-transparent via-transparent to-black opacity-60 mb-1.5`;
 const Top = tw.div`box-border m-3 float-right pointer-events-none`;
 const Bottom = tw.div`absolute left-0 right-0 bottom-0`;
 const Statistics = tw.div`box-border p-3 pb-2.5 flex`;

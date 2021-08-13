@@ -2,8 +2,7 @@ import { memo, useCallback, MouseEvent, useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useToggle } from 'react-use';
-import styled from 'styled-components/macro';
-import tw from 'twin.macro';
+import tw, { styled } from 'twin.macro';
 import { GoSearch } from 'react-icons/go';
 import { IoCloseCircle } from 'react-icons/io5';
 import { useTranslation } from 'react-i18next';
@@ -22,7 +21,7 @@ const Container = styled.div`
 `;
 const Box = tw.div`flex items-center h-12 rounded-3xl bg-gray-100 transition-colors duration-100 ease-in-out hover:bg-gray-200`;
 const Inner = tw.div`flex items-center py-0 pr-3 pl-4 h-full flex-auto min-h-0 min-w-0`;
-const SearchIcon = tw.div`pr-2 text-gray-500`;
+const SearchIcon = tw.div`pr-2 text-gray-500 flex`;
 const InputBox = styled.div`
   ${tw`h-full flex-auto min-h-0 min-w-0`};
 
