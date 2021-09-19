@@ -7,7 +7,7 @@ interface ReactHelmetProps {
 }
 
 function ReactHelmet({ title, description, canonical = '' }: ReactHelmetProps) {
-  const url = `https://sweetmilkys.github.io/fixabay$${canonical}`;
+  const url = `https://danah-kim.github.io/fixabay$${canonical}`;
   const _title = `Fixabay / ${title}`;
 
   return (
